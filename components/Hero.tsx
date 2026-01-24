@@ -1,14 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const VIDEOS = ['/bg1.mp4', '/bg2.mp4', '/bg3.mp4'];
+
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
+  const [videoSrc, setVideoSrc] = useState('/bg1.mp4');
 
   useEffect(() => {
+    // Select a random video on mount
+    const randomVideo = VIDEOS[Math.floor(Math.random() * VIDEOS.length)];
+    setVideoSrc(randomVideo);
+
     const ctx = gsap.context(() => {
       // Scale Up and Fade Out on Scroll
       if (textRef.current) {
@@ -35,18 +42,18 @@ const Hero: React.FC = () => {
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
+          key={videoSrc}
+          src={videoSrc}
           autoPlay
           loop
           muted
           playsInline
           className="w-full h-full object-cover opacity-20 filter grayscale"
         >
-          {/* Using a tech/abstract placeholder video */}
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-white-abstract-technology-lines-background-27357-large.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         {/* Overlay to ensure text contrast */}
-        <div className="absolute inset-0 bg-white/40"></div>
+        <div className="absolute inset-0 bg-white/50"></div>
       </div>
 
       {/* Hero Content */}
