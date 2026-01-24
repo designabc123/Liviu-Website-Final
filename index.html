@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liviu Lungu | Senior Graphic & Motion Designer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'accent-orange': '#ff6b00',
+              'off-white': '#f9f9f9',
+              'dark-gray': '#1a1a1a',
+              'light-gray': '#e5e5e5',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            },
+            backgroundImage: {
+              'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a1a1a' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")",
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        overflow-x: hidden;
+      }
+      
+      /* Isometric Utilities */
+      .perspective-container {
+        perspective: 1000px;
+      }
+      
+      /* Experience Isometric Cards */
+      .iso-card-base {
+        transform-style: preserve-3d;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        backface-visibility: hidden;
+      }
+      
+      /* Left Card: Rotates to face center */
+      .iso-card-left {
+        transform: rotateY(10deg) rotateX(5deg);
+      }
+      
+      /* Right Card: Rotates to face center */
+      .iso-card-right {
+        transform: rotateY(-10deg) rotateX(5deg);
+      }
+
+      /* Flatten hover for the card itself */
+      .iso-card-base:hover {
+         transform: rotateY(0) rotateX(0) translateZ(5px);
+      }
+      
+      /* Experience Card Outlines */
+      .card-outline-grey {
+        z-index: -1;
+        transition: transform 0.4s ease;
+        background-color: transparent;
+      }
+      
+      /* Move Left/Down (Away from Spine for Left Cards) */
+      /* CHANGED: Now translates DOWN (+y) and LEFT (-x) */
+      .group:hover .card-outline-grey.move-left {
+        transform: translate(-20px, 20px); 
+      }
+      
+      /* Move Right/Down (Away from Spine for Right Cards) */
+      /* CHANGED: Now translates DOWN (+y) and RIGHT (+x) */
+      .group:hover .card-outline-grey.move-right {
+        transform: translate(20px, 20px);
+      }
+      
+      /* Hide scrollbar for cleaner look */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ff6b00; 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^18.2.0/",
+    "react": "https://esm.sh/react@^18.2.0",
+    "react/": "https://esm.sh/react@^18.2.0/",
+    "gsap": "https://esm.sh/gsap@3.12.5",
+    "gsap/": "https://esm.sh/gsap@3.12.5/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
