@@ -43,7 +43,7 @@ const About: React.FC = () => {
           <div className="lg:w-1/2 mb-12 lg:mb-0 lg:pr-16 z-20">
             <h3 className="text-accent-orange font-bold uppercase tracking-widest mb-4">Professional Summary</h3>
             <h2 ref={headingRef} className="text-4xl md:text-5xl font-display font-bold text-dark-gray mb-8 leading-tight origin-left">
-              20+ Years of<br />Multidisciplinary Design
+              Strategic<br />Multidisciplinary Design
             </h2>
             <div className="text-lg text-gray-600 space-y-6 leading-relaxed font-light">
                <p>{CV_DATA.bio.split('.')[0]}. {CV_DATA.bio.split('.')[1]}.</p>

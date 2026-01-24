@@ -1,48 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { CV_DATA } from '../constants';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
-  const footerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Text Reveal Animation: Fade In + Scale Down
-      gsap.fromTo(textRef.current,
-        {
-          scale: 1.5, // Start larger
-          opacity: 0,
-        },
-        {
-          scale: 1, // End normal size
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 80%", // Start animating when footer enters view
-            end: "center 60%", 
-            scrub: 1 // Link to scroll
-          }
-        }
-      );
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     // Removed h-screen, kept py-24. Added overflow-hidden to crop the background text
-    <footer id="contact" ref={footerRef} className="bg-dark-gray text-white py-24 relative overflow-hidden flex flex-col justify-center">
+    <footer id="contact" className="bg-dark-gray text-white py-24 relative overflow-hidden flex flex-col justify-center">
       <div className="container mx-auto px-6 relative z-10 text-center">
         
-        {/* Animated Heading */}
-        <h2 ref={textRef} className="text-4xl md:text-6xl lg:text-8xl font-display font-bold mb-16 uppercase opacity-0 origin-center">
+        {/* Animated Heading with Framer Motion - Reversible */}
+        <motion.h2 
+          initial={{ opacity: 0, letterSpacing: "0.25em", y: 20 }}
+          whileInView={{ opacity: 1, letterSpacing: "0em", y: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          viewport={{ once: false, margin: "-10%" }}
+          className="text-4xl md:text-6xl lg:text-8xl font-display font-bold mb-16 uppercase origin-center"
+        >
           Let's create <span className="text-accent-orange">impact</span>
-        </h2>
+        </motion.h2>
         
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-16">
           <a href={`mailto:${CV_DATA.email}`} className="group flex items-center text-xl hover:text-accent-orange transition-colors">

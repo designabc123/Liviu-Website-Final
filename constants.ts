@@ -150,25 +150,124 @@ export const PORTFOLIO_CATEGORIES = [
   "Illustration"
 ];
 
-// PERFECT GRID LOGIC (3 Columns)
-// Total Slots Used = 12 (4 Rows x 3 Cols)
-// 1 Large Item (2x2) = 4 Slots
-// 8 Small Items (1x1) = 8 Slots
-// Total = 12 Slots. Perfect Rectangle.
+// UPDATED PORTFOLIO ITEMS WITH GALLERY DATA
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
-  { id: 1, title: "Medical Mode of Action", category: "3D animation", image: "https://picsum.photos/800/600?random=1", span: "md:col-span-1" },
-  { id: 2, title: "Pharma Brand Identity", category: "Logo design", image: "https://picsum.photos/600/400?random=2", span: "md:col-span-1" },
-  { id: 3, title: "Corporate Event Stage", category: "Event design", image: "https://picsum.photos/600/800?random=3", span: "md:col-span-1" }, 
+  // 1. Motion Design Collection (Featured Video)
+  { 
+    id: 1, 
+    title: "Biotech Motion Series", 
+    category: "Motion design", 
+    thumbnail: "https://picsum.photos/800/600?random=1",
+    videoPreview: "https://res.cloudinary.com/dao9flvhw/video/upload/v1769274097/bg1_cxszpb.mp4",
+    description: "A comprehensive series of motion graphics exploring cellular regeneration and DNA sequencing visualization. Created using Cinema 4D and After Effects.",
+    span: "md:col-span-2 md:row-span-2",
+    gallery: [
+      { type: 'video', url: "https://res.cloudinary.com/dao9flvhw/video/upload/v1769274097/bg1_cxszpb.mp4" },
+      { type: 'video', url: "https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg2_thtdxn.mp4" },
+      { type: 'video', url: "https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg3_dqaibh.mp4" }
+    ]
+  },
+  // 2. Photography (Single Image)
+  { 
+    id: 2, 
+    title: "Corporate Headshots", 
+    category: "Professional photography", 
+    thumbnail: "https://picsum.photos/600/400?random=2", 
+    description: "High-end corporate portraiture for executive leadership teams. Focused on approachable yet professional lighting setups.",
+    span: "md:col-span-1",
+    gallery: [
+      { type: 'image', url: "https://picsum.photos/1200/800?random=2" }
+    ]
+  },
+  // 3. 3D Animation
+  { 
+    id: 3, 
+    title: "Medical Mode of Action", 
+    category: "3D animation", 
+    thumbnail: "https://picsum.photos/600/800?random=3", 
+    description: "Technical visualization of drug delivery mechanisms. This project required precise anatomical accuracy and clean rendering styles.",
+    span: "md:col-span-1",
+    gallery: [
+      { type: 'image', url: "https://picsum.photos/1000/1200?random=3" },
+      { type: 'image', url: "https://picsum.photos/1000/1200?random=33" }
+    ]
+  }, 
   
-  // Row 2 starts here
-  { id: 4, title: "Patient Infographic", category: "Infographic design", image: "https://picsum.photos/800/800?random=4", span: "md:col-span-2 md:row-span-2" }, // Large 2x2
+  // 4. Infographic
+  { 
+    id: 4, 
+    title: "Patient Care Infographic", 
+    category: "Infographic design", 
+    thumbnail: "https://picsum.photos/800/800?random=4", 
+    description: "Simplifying complex clinical trial data into an accessible visual format for patient advocacy groups.",
+    span: "md:col-span-1",
+    gallery: [
+      { type: 'image', url: "https://picsum.photos/1200/1200?random=4" }
+    ]
+  }, 
   
-  // These fill the right column (col 3) next to the large item
-  { id: 5, title: "Product Launch Video", category: "Motion design", image: "https://picsum.photos/600/400?random=5", span: "md:col-span-1" },
-  { id: 6, title: "Packaging Line", category: "Packaging design", image: "https://picsum.photos/600/400?random=6", span: "md:col-span-1" },
+  // 5. Logo Design
+  { 
+    id: 5, 
+    title: "Pharma Brand Identity", 
+    category: "Logo design", 
+    thumbnail: "https://picsum.photos/600/400?random=5", 
+    description: "Complete identity system for a new oncology product line, including logo, typography, and color palette.",
+    span: "md:col-span-1",
+    gallery: [
+        { type: 'image', url: "https://picsum.photos/1200/800?random=5" },
+        { type: 'image', url: "https://picsum.photos/1200/800?random=55" },
+        { type: 'image', url: "https://picsum.photos/1200/800?random=555" }
+    ]
+  },
   
-  // Row 4 starts here (Bottom row)
-  { id: 7, title: "Golf Digest Layout", category: "Magazine design", image: "https://picsum.photos/600/800?random=7", span: "md:col-span-1" },
-  { id: 8, title: "Corporate Headshots", category: "Professional photography", image: "https://picsum.photos/800/600?random=8", span: "md:col-span-1" },
-  { id: 9, title: "Agency Web Portal", category: "Web design", image: "https://picsum.photos/600/400?random=9", span: "md:col-span-1" },
+  // 6. Packaging
+  { 
+    id: 6, 
+    title: "Supplement Packaging", 
+    category: "Packaging design", 
+    thumbnail: "https://picsum.photos/600/400?random=6", 
+    description: "Regulatory compliant packaging design for a range of vitamin supplements distributed in the EU market.",
+    span: "md:col-span-1",
+    gallery: [
+        { type: 'image', url: "https://picsum.photos/1200/800?random=6" }
+    ]
+  },
+  
+  // 7. Magazine
+  { 
+    id: 7, 
+    title: "Golf Digest Layout", 
+    category: "Magazine design", 
+    thumbnail: "https://picsum.photos/600/800?random=7", 
+    description: "Editorial layout design for the feature story of the month. Grid-based typography with dynamic image placement.",
+    span: "md:col-span-1",
+    gallery: [
+        { type: 'image', url: "https://picsum.photos/800/1200?random=7" }
+    ]
+  },
+  // 8. Event Design
+  { 
+    id: 8, 
+    title: "Medical Congress Booth", 
+    category: "Event design", 
+    thumbnail: "https://picsum.photos/800/600?random=8", 
+    description: "Large format graphics and structural design for a 20x20 trade show booth.",
+    span: "md:col-span-1",
+    gallery: [
+        { type: 'image', url: "https://picsum.photos/1200/900?random=8" }
+    ]
+  },
+  // 9. Web Design
+  { 
+    id: 9, 
+    title: "Agency Web Portal", 
+    category: "Web design", 
+    thumbnail: "https://picsum.photos/600/400?random=9", 
+    description: "UI/UX design for an internal asset management portal used by sales representatives.",
+    span: "md:col-span-1",
+    gallery: [
+        { type: 'image', url: "https://picsum.photos/1200/800?random=9" }
+    ]
+  },
 ];
