@@ -51,10 +51,6 @@ const Experience: React.FC = () => {
         // 1. Date reveals first (0.6s) - if it exists (might not on mobile for some rows)
         if (date) {
             // Determine X start based on text alignment logic (approx)
-            // If it's on right, slide from right. If left, slide from left.
-            // Simplified: slide from 0 or just fade in. 
-            // Let's keep the existing "slide from side" logic if we can detect it.
-            // We can check the parent class or just use a generic fade/slide.
             const isRightAligned = date.parentElement?.classList.contains('text-right');
             const dateXStart = isRightAligned ? 50 : -50;
             
@@ -100,7 +96,10 @@ const Experience: React.FC = () => {
   // Helper component to render the Card Content to avoid duplication in code
   const ExperienceCard = ({ role, isLeft, isMobile = false }: { role: ExperienceRole, isLeft: boolean, isMobile?: boolean }) => (
     <div 
-        className={`iso-card-base ${isLeft ? 'iso-card-left' : 'iso-card-right'} bg-off-white/50 backdrop-blur-sm p-8 rounded-xl relative group w-full`}
+        // FIX: Added 'origin-right' for left cards and 'origin-left' for right cards.
+        // This ensures the rotation happens around the edge connected to the spine.
+        // When hovering (flattening), the card expands OUTWARD from the spine, keeping the connector line fixed in place.
+        className={`iso-card-base ${isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} bg-off-white/50 backdrop-blur-sm p-8 rounded-xl relative group w-full`}
     >
         {/* Hover Outlines */}
         <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -109,13 +108,13 @@ const Experience: React.FC = () => {
 
         {/* CONNECTOR LINE */}
         {/* If Left Card: Line on Right. If Right Card: Line on Left. */}
-        {/* Desktop Width: w-12 (matches pr-12/pl-12). Mobile Width: w-8 (matches gap). */}
-        <div className={`absolute top-1/2 h-[1px] bg-accent-orange
+        {/* FIX: Reduced width to 60px for desktop to perfectly reach center of circle without overshooting. */}
+        <div className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-accent-orange -z-10
             ${isLeft 
-                ? '-right-12 w-12 origin-left hidden md:block' // Left Card (Desktop only)
+                ? '-right-[60px] w-[60px] origin-left hidden md:block' // Left Card (Desktop only) -> extends 60px right
                 : isMobile 
-                    ? '-left-8 w-8' // Right Card (Mobile specific width)
-                    : '-left-12 w-12' // Right Card (Desktop width)
+                    ? '-left-16 w-16' // Right Card (Mobile) -> extends 64px left (unchanged)
+                    : '-left-[60px] w-[60px]' // Right Card (Desktop) -> extends 60px left
             }
         `}></div>
 
@@ -197,8 +196,9 @@ const Experience: React.FC = () => {
                   </div>
 
                   {/* CENTER COLUMN: Spine Marker */}
-                  <div className="relative flex justify-center items-center h-full z-20">
-                     <div className="timeline-circle w-6 h-6 bg-accent-orange rounded-full border-4 border-white flex-shrink-0"></div>
+                  {/* Bumped z-index to 40 to ensure circle sits on top of the extended connector lines */}
+                  <div className="relative flex justify-center items-center h-full z-40">
+                     <div className="timeline-circle w-6 h-6 bg-accent-orange rounded-full border-4 border-white flex-shrink-0 shadow-sm"></div>
                   </div>
 
                   {/* RIGHT COLUMN */}

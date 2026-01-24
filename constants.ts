@@ -15,7 +15,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "PTC THERAPEUTICS, INC.",
     location: "Dublin, Ireland",
     title: "Senior Manager, Graphic Design",
-    period: "April 2022 – Present",
+    period: "Apr 2022 – Present",
     details: [
       "Expanded the design department's core capabilities beyond traditional static graphics by integrating high-end 3D animation, motion design, and video production into the team's portfolio.",
       "Serve as the primary technical lead for multimedia projects, leveraging this hybrid skillset to visualize complex medical concepts in-house.",
@@ -30,7 +30,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "FREELANCE CONSULTANT",
     location: "Remote",
     title: "Senior Graphic Designer",
-    period: "January 2021 – March 2022",
+    period: "Jan 2021 – Mar 2022",
     details: [
       "Network-Driven Consulting: Successfully transitioned to independent consulting following the closure of Klox Technologies.",
       "Secured projects primarily through direct referrals from former colleagues moving to new international roles.",
@@ -42,7 +42,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "KLOX TECHNOLOGIES",
     location: "Dublin, Ireland",
     title: "Head of Creative & IT",
-    period: "August 2017 – December 2020",
+    period: "Aug 2017 – Dec 2020",
     details: [
       "Brand & Campaign Management: Created new brand identities and guidelines, designing comprehensive visuals for multi-channel campaigns.",
       "Photography & Video: Shot and edited original photography and videos for new marketing campaigns.",
@@ -56,7 +56,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "WALTON DESIGN",
     location: "Dublin, Ireland",
     title: "Studio Manager / Senior Graphic Designer",
-    period: "October 2014 – June 2017",
+    period: "Oct 2014 – Jun 2017",
     details: [
       "Editorial Design: Led the design and layout for Ireland's most-read golf publications (Golf Digest Ireland, Golfing Magazine) and Golfing Weekly.",
       "Team Leadership: Supervised the design team, creating schedules/page plans and managing artwork flow for in-house studio clients.",
@@ -67,7 +67,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "ASPEN PHARMA",
     location: "Dublin, Ireland",
     title: "Senior Graphic Designer",
-    period: "October 2013 – October 2014",
+    period: "Oct 2013 – Oct 2014",
     details: [
       "Packaging Compliance: Created and updated packaging artwork, ensuring strict adherence to brand guidelines and technical specifications.",
       "Quality Control: Managed proofing processes to ensure zero-error output for regulated materials."
@@ -77,7 +77,7 @@ export const EXPERIENCE_DATA: ExperienceRole[] = [
     company: "SUN WAVE PHARMA",
     location: "Romania",
     title: "Senior Graphic Designer",
-    period: "October 2010 – September 2013",
+    period: "Oct 2010 – Sep 2013",
     details: [
       "Full-Cycle Design: Managed graphic design projects from concept to completion, including flyers, posters, brochures, and web design.",
       "Conference Marketing: Designed signage and promotional materials for various medical conferences and tradeshows."
