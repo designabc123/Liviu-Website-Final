@@ -54,12 +54,12 @@ const Hero: React.FC = () => {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-20 filter grayscale"
+          className="w-full h-full object-cover opacity-20"
         >
           Your browser does not support the video tag.
         </video>
-        {/* Overlay to ensure text contrast */}
-        <div className="absolute inset-0 bg-white/50"></div>
+        {/* Overlay to ensure text contrast - Increased to 35% */}
+        <div className="absolute inset-0 bg-white/[0.35]"></div>
       </div>
 
       {/* Hero Content */}
