@@ -4,12 +4,17 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VIDEOS = ['/bg1.mp4', '/bg2.mp4', '/bg3.mp4'];
+const VIDEOS = [
+  'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274097/bg1_cxszpb.mp4',
+  'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg2_thtdxn.mp4',
+  'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg3_dqaibh.mp4'
+];
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
-  const [videoSrc, setVideoSrc] = useState('/bg1.mp4');
+  // Initialize with the first video to ensure a valid state before hydration/effect
+  const [videoSrc, setVideoSrc] = useState(VIDEOS[0]);
 
   useEffect(() => {
     // Select a random video on mount
@@ -44,6 +49,7 @@ const Hero: React.FC = () => {
         <video
           key={videoSrc}
           src={videoSrc}
+          crossOrigin="anonymous"
           autoPlay
           loop
           muted
