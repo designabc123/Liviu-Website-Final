@@ -47,14 +47,10 @@ const Services: React.FC = () => {
           {CORE_COMPETENCIES.map((service, index) => (
             <div 
               key={index}
-              // Using "iso-card-right" style logic (slightly tilted) or just flat with the hover effect?
-              // User asked for "same style and hover animation".
-              // Iso card usually has a default tilt. Let's use 'iso-card-base iso-card-right' as a default for consistent look
-              // Or just 'iso-card-base' and let hover do the work?
-              // The Experience cards have static tilt. Let's give these a static tilt too (iso-card-right looks standard).
               className="perspective-container group"
             >
-                <div className="iso-card-base iso-card-right bg-white p-10 rounded-xl relative h-full">
+                {/* Changed: Removed 'iso-card-right' to make cards flat by default */}
+                <div className="iso-card-base bg-white p-10 rounded-xl relative h-full">
                     {/* Hover Outlines */}
                     <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     

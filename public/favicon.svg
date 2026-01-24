@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 900;
+    }
+  </style>
+  <rect width="64" height="64" fill="transparent"/>
+  <text x="50%" y="55%" font-size="40" fill="#1a1a1a" text-anchor="middle" dominant-baseline="middle" letter-spacing="-3">
+    LL<tspan fill="#ff6b00" dx="-2">.</tspan>
+  </text>
+</svg>
