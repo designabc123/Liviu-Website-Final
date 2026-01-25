@@ -194,10 +194,17 @@ const About: React.FC = () => {
                   {...{ "webkit-playsinline": "true" } as any}
                 />
                 
-                {/* Badge Overlay */}
-                <div className="absolute top-14 -left-10 bg-white p-6 shadow-xl z-30 max-w-xs border-t-4 border-accent-orange hidden lg:block">
-                  <p className="font-bold text-3xl text-dark-gray mb-1">20+</p>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider">Years Experience</p>
+                {/* Badge Overlay - Refined Typography */}
+                <div className="absolute top-14 -left-12 bg-white px-5 py-5 shadow-2xl z-30 border-t-4 border-accent-orange hidden lg:block w-fit">
+                  {/* Line 1: 20+ YR (Scaled down, No gap, Light YR) */}
+                  <div className="flex items-baseline justify-center leading-none gap-[1px]">
+                    <span className="text-4xl font-display font-bold text-dark-gray tracking-tighter">20+</span>
+                    <span className="text-4xl font-sans font-light text-dark-gray">YR</span>
+                  </div>
+                  {/* Line 2: EXPERIENCE (Matched optical width) */}
+                  <p className="text-[10px] text-dark-gray font-medium uppercase tracking-[0.38em] text-center leading-none mt-1 ml-1">
+                    Experience
+                  </p>
                 </div>
              </div>
           </div>
