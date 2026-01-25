@@ -8,21 +8,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const EXPERIENCE_GRAPHICS = [
   // Job A: Standard
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769286335/Exp-1-DNA_yfswmr.png", width: "w-[500px]", margin: "md:-ml-40", targetOpacity: 0.8 },
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769286335/Exp-1-DNA_yfswmr.png", width: "w-[500px]", margin: "md:-ml-40", targetOpacity: 0.8, nudgeDesktop: "" },
   // Job B: Standard
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289703/Exp-2-Lens_tsmttp.png", width: "w-[350px]", margin: "md:-mr-40", targetOpacity: 0.8 },
-  // Job C: MOVED CLOSER TO SPINE
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-3-Skin_cd4cqx.png", width: "w-[300px]", margin: "md:-ml-10", targetOpacity: 0.8 },
-  // Job D: Standard
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-4-Magazine_ntumfq.png", width: "w-[450px]", margin: "md:-mr-40", targetOpacity: 0.8 },
-  // Job E: Standard
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-5-Pills_lwjqhy.png", width: "w-[250px]", margin: "md:-ml-40", targetOpacity: 0.8 },
-  // Job F: Standard
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289707/Exp-6-Plant_chsdyh.png", width: "w-[200px]", margin: "md:-mr-40", targetOpacity: 0.8 },
-  // Job G: CLOSER TO SPINE + CUSTOM OPACITY
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-7-Mac_toymjy.png", width: "w-[250px]", margin: "md:-ml-10", targetOpacity: 0.7 },
-  // Job H: CLOSER TO SPINE
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-8-Stylus_lu8afb.png", width: "w-[250px]", margin: "md:-mr-10", targetOpacity: 0.8 }
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289703/Exp-2-Lens_tsmttp.png", width: "w-[350px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "" },
+  // Job C: Shift Right 75px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-3-Skin_cd4cqx.png", width: "w-[300px]", margin: "md:-ml-10", targetOpacity: 0.8, nudgeDesktop: "lg:translate-x-[75px]" },
+  // Job D: Shift Left 100px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-4-Magazine_ntumfq.png", width: "w-[450px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[100px]" },
+  // Job E: Shift Right 200px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-5-Pills_lwjqhy.png", width: "w-[250px]", margin: "md:-ml-40", targetOpacity: 0.8, nudgeDesktop: "lg:translate-x-[200px]" },
+  // Job F: Shift Left 200px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289707/Exp-6-Plant_chsdyh.png", width: "w-[200px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[200px]" },
+  // Job G: Shift Right 150px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-7-Mac_toymjy.png", width: "w-[250px]", margin: "md:-ml-10", targetOpacity: 0.7, nudgeDesktop: "lg:translate-x-[150px]" },
+  // Job H: Shift Left 150px
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-8-Stylus_lu8afb.png", width: "w-[250px]", margin: "md:-mr-10", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[150px]" }
 ];
 
 const Experience: React.FC = () => {
@@ -221,7 +221,7 @@ const Experience: React.FC = () => {
                     
                     {/* Even Index (0, 2, 4): Image is on Left Side (same as Date) */}
                     {isEven && (
-                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} z-0 hidden md:block pointer-events-none`}>
+                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 hidden md:block pointer-events-none`}>
                              <img 
                                 src={graphic.src} 
                                 alt={`Experience Graphic ${index + 1}`}
@@ -253,7 +253,7 @@ const Experience: React.FC = () => {
                     
                     {/* Odd Index (1, 3, 5): Image is on Right Side (same as Date) */}
                     {!isEven && (
-                        <div className={`absolute right-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} z-0 hidden md:block pointer-events-none`}>
+                        <div className={`absolute right-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 hidden md:block pointer-events-none`}>
                              <img 
                                 src={graphic.src} 
                                 alt={`Experience Graphic ${index + 1}`}
