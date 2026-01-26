@@ -15,14 +15,14 @@ const EXPERIENCE_GRAPHICS = [
   { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-3-Skin_cd4cqx.png", width: "w-[300px]", margin: "md:-ml-10", targetOpacity: 0.8, nudgeDesktop: "lg:translate-x-[75px]" },
   // Job D: Shift Left 100px
   { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-4-Magazine_ntumfq.png", width: "w-[450px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[100px]" },
-  // Job E: Shift Right 200px
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-5-Pills_lwjqhy.png", width: "w-[250px]", margin: "md:-ml-40", targetOpacity: 0.8, nudgeDesktop: "lg:translate-x-[200px]" },
-  // Job F: Shift Left 200px
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289707/Exp-6-Plant_chsdyh.png", width: "w-[200px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[200px]" },
+  // Job E: Shift Right 200px -> Scaled 30% (250 -> 325)
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-5-Pills_lwjqhy.png", width: "w-[325px]", margin: "md:-ml-40", targetOpacity: 0.8, nudgeDesktop: "lg:translate-x-[200px]" },
+  // Job F: Shift Left 200px -> Scaled 30% (200 -> 260)
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289707/Exp-6-Plant_chsdyh.png", width: "w-[260px]", margin: "md:-mr-40", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[200px]" },
   // Job G: Shift Right 150px
   { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289705/Exp-7-Mac_toymjy.png", width: "w-[250px]", margin: "md:-ml-10", targetOpacity: 0.7, nudgeDesktop: "lg:translate-x-[150px]" },
-  // Job H: Shift Left 150px
-  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-8-Stylus_lu8afb.png", width: "w-[250px]", margin: "md:-mr-10", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[150px]" }
+  // Job H: Shift Left 150px -> Scaled 30% (250 -> 325)
+  { src: "https://res.cloudinary.com/dao9flvhw/image/upload/v1769289706/Exp-8-Stylus_lu8afb.png", width: "w-[325px]", margin: "md:-mr-10", targetOpacity: 0.8, nudgeDesktop: "lg:-translate-x-[150px]" }
 ];
 
 const Experience: React.FC = () => {
