@@ -14,7 +14,7 @@ function App() {
   }, []);
 
   return (
-    <main className="antialiased selection:bg-accent-orange selection:text-white relative">
+    <main className="antialiased selection:bg-accent-orange selection:text-white relative w-full max-w-[100vw] overflow-x-hidden">
       {/* Navigation (Simple Absolute) */}
       <nav className="absolute top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center">
         <div className="text-2xl font-bold font-display tracking-tighter text-dark-gray mix-blend-difference">
