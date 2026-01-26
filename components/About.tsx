@@ -23,39 +23,34 @@ const About: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  // 1. Kickstart Logic: Essential for Mobile to load the first frame
+  // 1. HARD RESET: Prevent Autoplay / Force Start State on Mount
   useEffect(() => {
     const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!video || !canvas) return;
+    if (!video) return;
 
-    const kickstart = async () => {
-       try {
-         // Attempt to play to engage the mobile media engine
-         await video.play();
-         // Immediately pause to hold the first frame (scrolling will drive it later)
+    // Initial pause and reset
+    video.pause();
+    video.currentTime = 0;
+
+    // Repeatedly force pause and reset for 1 second to fight browser autoplay behavior
+    const interval = setInterval(() => {
+       if (video) {
          video.pause();
-         video.currentTime = 0;
-         
-         // Force immediate draw to canvas here
-         const ctx = canvas.getContext('2d');
-         if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-       } catch (e) {
-         // Autoplay blocked or failed? Just force draw anyway
-         console.debug("Video kickstart fallback", e);
-         const ctx = canvas.getContext('2d');
-         if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+         // If video is playing or has drifted significantly without user input, reset it
+         // Note: We check if it's NOT paused or if it ended to catch rogue autoplay
+         if (!video.paused || video.ended) {
+             video.currentTime = 0;
+         }
        }
-    };
+    }, 50);
 
-    if (video.readyState >= 2) {
-        kickstart();
-    } else {
-        video.addEventListener('loadeddata', kickstart);
-    }
-    
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 1000);
+
     return () => {
-        video.removeEventListener('loadeddata', kickstart);
+      clearInterval(interval);
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -92,6 +87,11 @@ const About: React.FC = () => {
     const canvas = canvasRef.current;
 
     if (video && canvas && !isNaN(video.duration)) {
+        // Safety Check: If video thinks it ended, reset it to allow scrubbing
+        if (video.ended) {
+            video.currentTime = 0;
+        }
+
         const duration = video.duration;
         // Calculate time, clamp slightly before end to avoid ending state
         const targetTime = Math.min(latest * duration, duration - 0.1);
@@ -199,8 +199,8 @@ const About: React.FC = () => {
                 {/* Hidden Source Video */}
                 {/* 
                    Attributes Critical for Mobile:
-                   - playsInline={true}: Required for iOS to allow play()
-                   - muted: Often required for autoplay/play()
+                   - playsInline={true}: Required for iOS to prevent fullscreen
+                   - muted: Often required for manipulation without interaction
                    - poster: Fallback logic
                 */}
                 <video 
