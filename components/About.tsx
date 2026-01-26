@@ -23,34 +23,54 @@ const About: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  // 1. HARD RESET: Prevent Autoplay / Force Start State on Mount
+  // 1. RUNAWAY FIX & START CLAMP
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Initial pause and reset
+    let isInitialized = false;
+    let animationFrameId: number;
+
+    // A. The "Runaway" Fix: Handle 'ended' event
+    // If the video somehow plays to the end (mobile autoplay), snap it back
+    const handleEnded = () => {
+        video.pause();
+        video.currentTime = 0.1; // Reset to start (safe zone)
+    };
+    video.addEventListener('ended', handleEnded);
+
+    // B. The "Start Clamp" (Initialization Loop)
+    // Run a loop for the first few seconds to aggressively catch any autoplay "runaway" behavior
+    const startTime = Date.now();
+    
+    const checkInitialization = () => {
+        // Stop checking after 2 seconds to release resources
+        if (Date.now() - startTime > 2000) {
+            cancelAnimationFrame(animationFrameId);
+            return;
+        }
+
+        // Logic: If we haven't manually scrubbed yet (approximated) and video has advanced > 0.5s
+        // This catches the "runaway" autoplay on iOS/Android
+        if (!isInitialized && video.currentTime > 0.5) {
+             video.pause();
+             video.currentTime = 0;
+             isInitialized = true; // Mark as handled
+        }
+        
+        animationFrameId = requestAnimationFrame(checkInitialization);
+    };
+
+    // Kick off the monitoring loop
+    animationFrameId = requestAnimationFrame(checkInitialization);
+
+    // Initial Hard Reset
     video.pause();
     video.currentTime = 0;
 
-    // Repeatedly force pause and reset for 1 second to fight browser autoplay behavior
-    const interval = setInterval(() => {
-       if (video) {
-         video.pause();
-         // If video is playing or has drifted significantly without user input, reset it
-         // Note: We check if it's NOT paused or if it ended to catch rogue autoplay
-         if (!video.paused || video.ended) {
-             video.currentTime = 0;
-         }
-       }
-    }, 50);
-
-    const timeout = setTimeout(() => {
-      clearInterval(interval);
-    }, 1000);
-
     return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
+        video.removeEventListener('ended', handleEnded);
+        cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -58,8 +78,6 @@ const About: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       if (canvasRef.current) {
-        // Set internal resolution to match display size
-        // Using offsetWidth as requested, ensures 1:1 pixel mapping for sharpness
         canvasRef.current.width = canvasRef.current.offsetWidth;
         canvasRef.current.height = canvasRef.current.offsetHeight;
         
@@ -72,7 +90,6 @@ const About: React.FC = () => {
     };
 
     window.addEventListener('resize', handleResize);
-    // Slight delay to ensure layout is settled
     const timer = setTimeout(handleResize, 100);
 
     return () => {
@@ -81,34 +98,35 @@ const About: React.FC = () => {
     };
   }, []);
 
-  // 3. The Render Loop (Driven by Scroll)
+  // 3. The Scrub Logic (Mobile Robustness)
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
     if (video && canvas && !isNaN(video.duration)) {
-        // Safety Check: If video thinks it ended, reset it to allow scrubbing
-        if (video.ended) {
-            video.currentTime = 0;
-        }
-
         const duration = video.duration;
-        // Calculate time, clamp slightly before end to avoid ending state
-        const targetTime = Math.min(latest * duration, duration - 0.1);
         
-        if (isFinite(targetTime)) {
-            video.currentTime = targetTime;
-            
-            // Draw immediately (per requirements)
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            }
+        // Calculate target time based on scroll progress
+        let targetTime = latest * duration;
+        
+        // Safety Clamp 1: Ensure finite number
+        if (!Number.isFinite(targetTime)) targetTime = 0;
+        
+        // Safety Clamp 2: Never hit absolute end (prevent 'ended' lock-up)
+        // Keeping it 0.1s away from the end ensures smooth backward scrubbing
+        targetTime = Math.min(targetTime, duration - 0.1);
+        
+        video.currentTime = targetTime;
+        
+        // Draw immediate frame
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         }
     }
   });
 
-  // 4. Backup Seeked Listener
+  // 4. Backup Seeked Listener (Redraw on seek)
   useEffect(() => {
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -202,6 +220,7 @@ const About: React.FC = () => {
                    - playsInline={true}: Required for iOS to prevent fullscreen
                    - muted: Often required for manipulation without interaction
                    - poster: Fallback logic
+                   - NO autoplay: Strictly manual control
                 */}
                 <video 
                   ref={videoRef}
