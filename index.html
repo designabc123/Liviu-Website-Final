@@ -49,6 +49,20 @@
     </script>
 
     <style>
+      /* IOS / MOBILE LONG-PRESS FIXES */
+      /* Prevents the 'magnifier' and scroll jump on long press for layout elements */
+      * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      /* Re-enable text selection for content readability */
+      p, h1, h2, h3, h4, h5, h6, span, a, li, input, textarea {
+        -webkit-user-select: text;
+        user-select: text;
+      }
+
       html, body {
         width: 100%;
         background-color: #ffffff;
