@@ -1,234 +1,299 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PORTFOLIO_CATEGORIES, PORTFOLIO_ITEMS } from '../constants';
-import { PortfolioItem } from '../types';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- COMPONENT: PROJECT MODAL ---
-interface ProjectModalProps {
-  project: PortfolioItem;
+// --- TYPE DEFINITIONS ---
+interface PortfolioMediaItem {
+  type: string;
+  src: string;
+  thumb: string;
+}
+
+interface PortfolioItem {
+  id: string;
+  title: string;
+  coverImage: string;
+  coverVideo?: string;
+  type: string;
+  items: PortfolioMediaItem[];
+  className?: string; // For Grid Spans
+}
+
+// --- NEW DATA STRUCTURE (BENTO GRID) ---
+const PORTFOLIO_DATA: PortfolioItem[] = [
+  // ROW 1 & 2 (HEROES)
+  {
+    id: '3d-anim',
+    title: '3D ANIMATION',
+    className: 'col-span-1 md:col-span-2 md:row-span-2', // Large Block
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463086/bg1_ucnnzi.png',
+    coverVideo: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274097/bg1_cxszpb.mp4',
+    type: 'video',
+    items: [
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274097/bg1_cxszpb.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463086/bg1_ucnnzi.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg2_thtdxn.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463089/bg2_fer7x4.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769274096/bg3_dqaibh.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463090/bg3_zvafgm.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461164/Sephience_MoA_gkfl7p.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463103/Sephience_MoA_s5veqz.png' }
+    ]
+  },
+  {
+    id: 'motion',
+    title: 'MOTION DESIGN',
+    className: 'col-span-1 md:col-span-2 md:row-span-2', // Large Block
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463603/Rosacea_Hero_v1vytz.png',
+    coverVideo: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461598/Rosacea_Loop_Thumbnail_nd8nnx.mp4',
+    type: 'video',
+    items: [
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461218/Rosacea_rk4j2g.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463165/Rosacea_bqm1oy.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461219/Acne_ulcppn.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463142/Acne_thoarx.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461213/Skin_Rejuvenation_os2gb2.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463173/Skin_Rejuvenation_ula9sy.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461209/The_Golf_Digest_Volvo_Open_Intro_Animation_zhrs0f.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463151/Golf_pt2q0i.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461214/Sephience_xfehxk.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463169/Sephience_wfnvj5.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461216/PTC_qyn1ap.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463160/PTC_vcah25.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461208/Immudex_Dextramer_Technology_ricwo1.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463146/Dextramer_wszqtb.png' },
+      { type: 'video', src: 'https://res.cloudinary.com/dao9flvhw/video/upload/v1769461207/Immudex_About_Video_uotuqh.mp4', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769463155/Immudex_About_fxywqv.png' }
+    ]
+  },
+  // ROW 3 & 4 (STANDARD TILES)
+  {
+    id: 'event',
+    title: 'EVENT DESIGN',
+    className: 'col-span-1 row-span-1',
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464982/2024_4_hz7ptg.jpg',
+    type: 'image',
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464979/2023_1_wlrf2j.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464979/2023_1_wlrf2j.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464980/2024_1_zstmkm.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464980/2024_1_zstmkm.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464981/2024_2_ofi2js.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464981/2024_2_ofi2js.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464980/2024_3_a9ndrv.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464980/2024_3_a9ndrv.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464982/2024_4_hz7ptg.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464982/2024_4_hz7ptg.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464984/2025_1_r9uzlv.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464984/2025_1_r9uzlv.jpg' }
+    ]
+  },
+  { id: 'illustration', title: 'ILLUSTRATION', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'infographic', title: 'INFOGRAPHIC DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'logo', title: 'LOGO DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'magazine', title: 'MAGAZINE DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'packaging', title: 'PACKAGING DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'photo', title: 'PROFESSIONAL PHOTOGRAPHY', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'web', title: 'WEB DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] }
+];
+
+// --- COMPONENT: MODAL ---
+interface CategoryModalProps {
+  category: PortfolioItem;
   onClose: () => void;
 }
 
-const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+const CategoryModal: React.FC<CategoryModalProps> = ({ category, onClose }) => {
   const [activeMediaIndex, setActiveMediaIndex] = useState(0);
-  const currentMedia = project.gallery[activeMediaIndex];
-  const hasMultiple = project.gallery.length > 1;
+  const currentMedia = category.items[activeMediaIndex];
 
-  // Reset index when project changes (though normally we mount/unmount)
-  useEffect(() => {
-    setActiveMediaIndex(0);
-  }, [project]);
+  // Helper Functions for Navigation
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveMediaIndex((prev) => (prev + 1) % category.items.length);
+  };
+
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveMediaIndex((prev) => (prev - 1 + category.items.length) % category.items.length);
+  };
 
   // Handle Key Press
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight' && hasMultiple) handleNext();
-      if (e.key === 'ArrowLeft' && hasMultiple) handlePrev();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'ArrowLeft') handlePrev();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [hasMultiple, onClose, activeMediaIndex]);
-
-  const handleNext = () => {
-    setActiveMediaIndex((prev) => (prev + 1) % project.gallery.length);
-  };
-
-  const handlePrev = () => {
-    setActiveMediaIndex((prev) => (prev - 1 + project.gallery.length) % project.gallery.length);
-  };
+  }, [category.items.length, onClose]);
 
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-8"
-      onClick={onClose} // Backdrop click closes
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+      onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-7xl h-full md:h-auto max-h-[95vh] flex flex-col md:grid md:grid-cols-[1fr_350px] gap-8 bg-dark-gray rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-        onClick={(e) => e.stopPropagation()} // Stop propagation
+        className="relative w-full max-w-6xl max-h-[95vh] flex flex-col bg-zinc-900 rounded-[32px] overflow-hidden shadow-2xl border border-white/10"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* CLOSE BUTTON */}
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/50 hover:bg-accent-orange text-white rounded-full flex items-center justify-center transition-colors border border-white/10"
-        >
-          <i className="fa-solid fa-xmark"></i>
-        </button>
+        {/* HEADER */}
+        <div className="flex items-center justify-between px-8 py-5 border-b border-white/10 bg-zinc-900 z-10 shrink-0">
+          <h2 className="text-xl font-bold font-display text-accent-orange tracking-wider uppercase">
+            {category.title}
+          </h2>
+          {/* UPDATED CLOSE BUTTON */}
+          <button 
+            onClick={onClose}
+            className="w-12 h-12 flex items-center justify-center bg-black/50 hover:bg-accent-orange text-white rounded-full transition-all duration-300 shadow-lg backdrop-blur-sm group"
+          >
+            <i className="fa-solid fa-xmark text-lg group-hover:scale-110 transition-transform"></i>
+          </button>
+        </div>
 
-        {/* LEFT: MEDIA VIEWER */}
-        <div className="flex flex-col h-full bg-black relative">
-          {/* Main Viewport */}
-          <div className="flex-grow relative flex items-center justify-center bg-zinc-900 overflow-hidden group">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeMediaIndex}
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="w-full h-full flex items-center justify-center"
+        {/* HERO MEDIA - Relative Container for Arrows */}
+        <div className="relative w-full h-auto bg-zinc-900 overflow-y-auto group">
+          
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeMediaIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="w-full h-auto block"
+            >
+              {currentMedia && (currentMedia.type === 'video' ? (
+                <video 
+                  src={currentMedia.src} 
+                  controls 
+                  autoPlay 
+                  className="w-full h-auto block"
+                />
+              ) : (
+                <img 
+                  src={currentMedia.src} 
+                  alt={category.title} 
+                  className="w-full h-auto block"
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+          
+          {/* NAVIGATION ARROWS - REFINED */}
+          {category.items.length > 1 && (
+            <>
+              {/* Previous Button */}
+              <button
+                onClick={handlePrev}
+                className="absolute top-1/2 left-6 -translate-y-1/2 w-16 h-16 flex items-center justify-center bg-black/50 hover:bg-accent-orange text-white rounded-full transition-all duration-300 z-20 backdrop-blur-sm cursor-pointer shadow-lg opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
+                aria-label="Previous Item"
               >
-                {currentMedia.type === 'video' ? (
-                  <video 
-                    src={currentMedia.url} 
-                    controls 
-                    autoPlay 
-                    className="max-w-full max-h-full object-contain"
-                  />
-                ) : (
-                  <img 
-                    src={currentMedia.url} 
-                    alt={project.title} 
-                    className="max-w-full max-h-full object-contain"
-                  />
-                )}
-              </motion.div>
-            </AnimatePresence>
+                <i className="fa-solid fa-chevron-left text-2xl"></i>
+              </button>
 
-            {/* Navigation Arrows (Only if multiple) */}
-            {hasMultiple && (
-              <>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-accent-orange text-white rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
-                >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-accent-orange text-white rounded-full flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
-                >
-                  <i className="fa-solid fa-chevron-right"></i>
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Thumbnails Strip (Only if multiple) */}
-          {hasMultiple && (
-            <div className="h-20 bg-zinc-900 border-t border-white/10 flex items-center gap-2 px-4 overflow-x-auto">
-               {project.gallery.map((item, idx) => (
-                 <button
-                   key={idx}
-                   onClick={() => setActiveMediaIndex(idx)}
-                   className={`relative w-24 h-16 flex-shrink-0 rounded overflow-hidden border-2 transition-all ${activeMediaIndex === idx ? 'border-accent-orange opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}
-                 >
-                   {item.type === 'video' ? (
-                     <video src={item.url} className="w-full h-full object-cover pointer-events-none" />
-                   ) : (
-                     <img src={item.url} alt="thumb" className="w-full h-full object-cover" />
-                   )}
-                   {item.type === 'video' && (
-                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <i className="fa-solid fa-play text-white text-[10px]"></i>
-                     </div>
-                   )}
-                 </button>
-               ))}
-            </div>
+              {/* Next Button */}
+              <button
+                onClick={handleNext}
+                className="absolute top-1/2 right-6 -translate-y-1/2 w-16 h-16 flex items-center justify-center bg-black/50 hover:bg-accent-orange text-white rounded-full transition-all duration-300 z-20 backdrop-blur-sm cursor-pointer shadow-lg opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
+                aria-label="Next Item"
+              >
+                <i className="fa-solid fa-chevron-right text-2xl"></i>
+              </button>
+            </>
           )}
+
         </div>
 
-        {/* RIGHT: INFO PANEL */}
-        <div className="p-8 md:p-12 flex flex-col bg-zinc-800/50 md:bg-transparent overflow-y-auto">
-          <div className="mb-6">
-            <span className="inline-block px-3 py-1 bg-accent-orange/10 text-accent-orange text-xs font-bold uppercase tracking-widest rounded mb-3">
-              {project.category}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
-              {project.title}
-            </h2>
-            <div className="h-1 w-20 bg-accent-orange mb-6"></div>
-            <p className="text-gray-300 leading-relaxed text-lg font-light">
-              {project.description}
-            </p>
+        {/* THUMBNAIL STRIP - WRAPPING */}
+        {category.items.length > 1 && (
+          <div className="bg-zinc-800 border-t border-white/10 flex flex-wrap items-start px-6 py-6 gap-3 shrink-0">
+            {category.items.map((item, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveMediaIndex(idx)}
+                className={`relative w-36 aspect-video flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300 ${activeMediaIndex === idx ? 'border-accent-orange opacity-100 ring-2 ring-accent-orange/30' : 'border-transparent opacity-60 hover:opacity-100'}`}
+              >
+                <img src={item.thumb} alt="thumbnail" className="w-full h-full object-cover" />
+                {item.type === 'video' && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                     <i className="fa-solid fa-play text-white text-xs"></i>
+                  </div>
+                )}
+              </button>
+            ))}
           </div>
-
-          <div className="mt-auto pt-8 border-t border-white/10">
-            <div className="flex gap-4">
-              <div className="text-center">
-                 <p className="text-2xl font-bold text-white">{project.gallery.length}</p>
-                 <p className="text-xs text-gray-500 uppercase">Assets</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        )}
       </div>
     </motion.div>
   );
 };
 
 
-// --- COMPONENT: PORTFOLIO TILE ---
-const PortfolioTile = ({ item, onClick }: { item: PortfolioItem, onClick: () => void }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+// --- COMPONENT: CATEGORY CARD ---
+const CategoryCard: React.FC<{ item: PortfolioItem, onClick: () => void }> = ({ item, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isTbc = item.type === 'tbc';
 
   useEffect(() => {
-    if (item.videoPreview && videoRef.current) {
+    if (item.type === 'video' && item.coverVideo && videoRef.current) {
       if (isHovered) {
-        videoRef.current.play().catch(e => console.log("Autoplay prevented", e));
+        videoRef.current.play().catch(() => {});
       } else {
         videoRef.current.pause();
         videoRef.current.currentTime = 0;
       }
     }
-  }, [isHovered, item.videoPreview]);
+  }, [isHovered, item]);
 
   return (
     <div 
-      onClick={onClick}
+      onClick={() => !isTbc && onClick()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative overflow-hidden rounded-xl bg-gray-200 cursor-pointer shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 aspect-video ${item.span || 'md:col-span-1'}`}
+      className={`group relative w-full aspect-video overflow-hidden rounded-xl bg-zinc-200 shadow-md hover:shadow-2xl transition-all duration-500
+        ${isTbc ? 'cursor-default opacity-80' : 'cursor-pointer hover:-translate-y-1'}
+        ${item.className || ''}`}
     >
-      {/* 1. Static Image (Always visible initially) */}
-      <img 
-        src={item.thumbnail} 
-        alt={item.title} 
-        className={`w-full h-full object-cover transition-opacity duration-500 ${isHovered && item.videoPreview ? 'opacity-0' : 'opacity-100'} filter grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105`}
-      />
+      {/* 1. Base Image (or Placeholder) */}
+      {item.coverImage ? (
+        <img 
+          src={item.coverImage} 
+          alt={item.title} 
+          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0 ease-in-out"
+        />
+      ) : (
+        <div className="w-full h-full bg-zinc-300 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
+          <i className="fa-solid fa-image text-zinc-400 text-4xl"></i>
+        </div>
+      )}
 
-      {/* 2. Video Preview (Plays on hover) */}
-      {item.videoPreview && (
+      {/* 2. Video Overlay (On Hover) - Also applied grayscale transition just in case, though usually colorful */}
+      {item.type === 'video' && item.coverVideo && (
         <video
           ref={videoRef}
-          src={item.videoPreview}
+          src={item.coverVideo}
           muted
           loop
           playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${isHovered ? 'opacity-100 grayscale-0' : 'opacity-0 grayscale'}`}
         />
       )}
 
-      {/* 3. Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-gray via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+      {/* 3. Dark Overlay (Gradient) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
 
-      {/* 4. Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-        <span className="text-accent-orange text-xs font-bold uppercase tracking-wider mb-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75">
-          {item.category}
-        </span>
-        <h3 className="text-white text-xl md:text-2xl font-bold translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100 leading-none">
+      {/* 4. Text Content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+        <h3 className="text-2xl md:text-3xl font-display font-bold text-white uppercase tracking-widest text-center">
           {item.title}
         </h3>
         
-        {/* Play Icon Indicator if Video or Gallery */}
-        <div className="absolute top-4 right-4 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-           {item.gallery.some(g => g.type === 'video') ? (
-             <i className="fa-solid fa-play text-white text-sm"></i>
-           ) : (
-             <i className="fa-solid fa-expand text-white text-sm"></i>
-           )}
-        </div>
+        {/* TBC Badge */}
+        {isTbc && (
+          <span className="mt-2 text-[10px] font-bold uppercase tracking-widest bg-white/20 text-white px-2 py-1 rounded">
+            Coming Soon
+          </span>
+        )}
+        
+        {/* Interaction Cue */}
+        {!isTbc && (
+          <div className="absolute bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
+             <span className="text-accent-orange text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+               View Projects <i className="fa-solid fa-arrow-right"></i>
+             </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -237,19 +302,12 @@ const PortfolioTile = ({ item, onClick }: { item: PortfolioItem, onClick: () => 
 
 // --- MAIN COMPONENT ---
 const Portfolio: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
-  
+  const [selectedCategory, setSelectedCategory] = useState<PortfolioItem | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const filteredItems = activeFilter === "All" 
-    ? PORTFOLIO_ITEMS 
-    : PORTFOLIO_ITEMS.filter(item => item.category === activeFilter);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading Reveal: Scale Down & Fade In
       if (headingRef.current) {
         gsap.fromTo(headingRef.current,
           { scale: 1.5, opacity: 0 },
@@ -267,76 +325,55 @@ const Portfolio: React.FC = () => {
         );
       }
     }, containerRef);
-
     return () => ctx.revert();
   }, []);
 
-  // Lock body scroll when modal is open
+  // Body Scroll Lock
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedCategory) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [selectedProject]);
+  }, [selectedCategory]);
 
   return (
     <section ref={containerRef} className="py-32 bg-off-white/90 relative z-10">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="mb-16 text-center">
-          <h2 ref={headingRef} className="text-4xl md:text-6xl font-display font-bold text-dark-gray mb-8 origin-center">
+        
+        {/* Section Header */}
+        <div className="mb-20 text-center">
+          <h2 ref={headingRef} className="text-4xl md:text-6xl font-display font-bold text-dark-gray mb-6 origin-center">
             Selected <span className="text-accent-orange">Work</span>
           </h2>
-          
-          {/* Filters */}
-          <div className="flex flex-wrap gap-4 justify-center">
-            {PORTFOLIO_CATEGORIES.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveFilter(category)}
-                className={`px-4 py-2 text-sm font-bold uppercase tracking-wider border-2 transition-all duration-300 rounded-full
-                  ${activeFilter === category 
-                    ? 'bg-accent-orange border-accent-orange text-white' 
-                    : 'bg-transparent border-gray-300 text-gray-500 hover:border-dark-gray hover:text-dark-gray'
-                  }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          <p className="text-gray-500 max-w-xl mx-auto">
+            Explore diverse projects across animation, motion design, and event experiences.
+          </p>
         </div>
 
-        {/* Masonry Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-dense">
-          <AnimatePresence>
-            {filteredItems.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className={item.span || 'md:col-span-1'}
-              >
-                <PortfolioTile 
-                  item={item} 
-                  onClick={() => setSelectedProject(item)} 
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* CATEGORY GRID - BENTO LAYOUT */}
+        {/* Using grid-cols-4 and aspect-video on cards to handle height naturally */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {PORTFOLIO_DATA.map((item) => (
+            <CategoryCard 
+              key={item.id} 
+              item={item} 
+              onClick={() => setSelectedCategory(item)} 
+            />
+          ))}
         </div>
+
       </div>
-      
+
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-1/3 h-full bg-grid-pattern opacity-50 z-0 transform rotate-180 pointer-events-none"></div>
 
-      {/* PROJECT MODAL */}
+      {/* MODAL */}
       <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal 
-            project={selectedProject} 
-            onClose={() => setSelectedProject(null)} 
+        {selectedCategory && (
+          <CategoryModal 
+            category={selectedCategory} 
+            onClose={() => setSelectedCategory(null)} 
           />
         )}
       </AnimatePresence>
