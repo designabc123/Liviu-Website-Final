@@ -6,6 +6,9 @@ import { useScroll, useMotionValueEvent } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Derived from the video URL (Cloudinary auto-generates jpg posters)
+const POSTER_URL = "https://res.cloudinary.com/dao9flvhw/video/upload/v1769375974/Liviu_Profile_Animation_720_V2_xofa6w.jpg";
+
 const About: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -20,26 +23,39 @@ const About: React.FC = () => {
     offset: ["start end", "end start"]
   });
 
-  // 1. Hard Reset Logic: Force start position on mount to prevent autoplay sticking at end
+  // 1. Kickstart Logic: Essential for Mobile to load the first frame
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
 
-    // Force reset repeatedly for 1 second to fight browser autoplay/caching
-    const resetInterval = setInterval(() => {
-        if(video) {
-            video.pause();
-            video.currentTime = 0;
-        }
-    }, 50);
+    const kickstart = async () => {
+       try {
+         // Attempt to play to engage the mobile media engine
+         await video.play();
+         // Immediately pause to hold the first frame (scrolling will drive it later)
+         video.pause();
+         video.currentTime = 0;
+         
+         // Force immediate draw to canvas here
+         const ctx = canvas.getContext('2d');
+         if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+       } catch (e) {
+         // Autoplay blocked or failed? Just force draw anyway
+         console.debug("Video kickstart fallback", e);
+         const ctx = canvas.getContext('2d');
+         if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+       }
+    };
 
-    const timer = setTimeout(() => {
-        clearInterval(resetInterval);
-    }, 1000);
-
+    if (video.readyState >= 2) {
+        kickstart();
+    } else {
+        video.addEventListener('loadeddata', kickstart);
+    }
+    
     return () => {
-        clearInterval(resetInterval);
-        clearTimeout(timer);
+        video.removeEventListener('loadeddata', kickstart);
     };
   }, []);
 
@@ -92,7 +108,7 @@ const About: React.FC = () => {
     }
   });
 
-  // 4. Initial Paint on Load & Seeked Listener (Backup for sharpness)
+  // 4. Backup Seeked Listener
   useEffect(() => {
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -106,24 +122,14 @@ const About: React.FC = () => {
 
       if (video) {
         video.addEventListener('seeked', draw);
-        video.addEventListener('loadeddata', draw);
       }
 
       return () => {
         if (video) {
             video.removeEventListener('seeked', draw);
-            video.removeEventListener('loadeddata', draw);
         }
       };
   }, []);
-
-  const onLoadedMetadata = () => {
-    // This is handled by the Hard Reset effect, but good to have as immediate trigger
-    if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-    }
-  };
 
   // GSAP Animation for Heading
   useEffect(() => {
@@ -174,34 +180,47 @@ const About: React.FC = () => {
 
           {/* Video Column - Canvas Rendered */}
           <div className="lg:w-1/2 relative w-full">
-             <div className="relative z-30 lg:-mb-20 aspect-square w-full max-w-[550px] ml-auto">
+             {/* 
+                Mobile Fixes:
+                1. min-h-[400px]: Prevents collapse on mobile
+                2. bg-cover: Shows fallback poster if canvas fails/loads slow
+             */}
+             <div 
+                className="relative z-30 lg:-mb-20 aspect-square w-full max-w-[550px] min-h-[400px] lg:min-h-0 ml-auto bg-cover bg-center rounded-[20px]"
+                style={{ backgroundImage: `url(${POSTER_URL})` }}
+             >
                 
                 {/* Visible Canvas */}
                 <canvas 
                     ref={canvasRef}
-                    className="w-full h-full object-cover shadow-2xl rounded-[20px]"
+                    className="w-full h-full object-cover shadow-2xl rounded-[20px] relative z-10"
                 />
 
                 {/* Hidden Source Video */}
+                {/* 
+                   Attributes Critical for Mobile:
+                   - playsInline={true}: Required for iOS to allow play()
+                   - muted: Often required for autoplay/play()
+                   - poster: Fallback logic
+                */}
                 <video 
                   ref={videoRef}
                   className="hidden"
                   src="https://res.cloudinary.com/dao9flvhw/video/upload/v1769375974/Liviu_Profile_Animation_720_V2_xofa6w.mp4" 
                   muted
-                  playsInline
+                  playsInline={true}
+                  loop={false}
                   preload="auto"
-                  onLoadedMetadata={onLoadedMetadata}
+                  poster={POSTER_URL}
                   {...{ "webkit-playsinline": "true" } as any}
                 />
                 
-                {/* Badge Overlay - Refined Typography */}
+                {/* Badge Overlay */}
                 <div className="absolute top-14 -left-12 bg-white px-5 py-5 shadow-2xl z-30 border-t-4 border-accent-orange hidden lg:block w-fit">
-                  {/* Line 1: 20+ YR (Scaled down, No gap, Light YR) */}
                   <div className="flex items-baseline justify-center leading-none gap-[1px]">
                     <span className="text-4xl font-display font-bold text-dark-gray tracking-tighter">20+</span>
                     <span className="text-4xl font-sans font-light text-dark-gray">YR</span>
                   </div>
-                  {/* Line 2: EXPERIENCE (Matched optical width) */}
                   <p className="text-[10px] text-dark-gray font-medium uppercase tracking-[0.38em] text-center leading-none mt-1 ml-1">
                     Experience
                   </p>
