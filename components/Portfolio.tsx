@@ -338,11 +338,12 @@ const Portfolio: React.FC = () => {
   }, [selectedCategory]);
 
   return (
-    <section ref={containerRef} className="py-32 bg-off-white/90 relative z-10">
+    // Updated padding: pt-16 pb-24 for mobile symmetry (matching header mb-16)
+    <section ref={containerRef} className="pt-16 pb-24 md:py-24 bg-off-white/90 relative z-10">
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* Section Header */}
-        <div className="mb-20 text-center">
+        {/* Section Header: mb-16 on mobile to match pt-16 */}
+        <div className="mb-16 md:mb-20 text-center">
           <h2 ref={headingRef} className="text-4xl md:text-6xl font-display font-bold text-dark-gray mb-6 origin-center">
             Selected <span className="text-accent-orange">Work</span>
           </h2>

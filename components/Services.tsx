@@ -34,10 +34,11 @@ const Services: React.FC = () => {
   }, []);
 
   return (
-    // bg-white/90 for transparency. relative z-10 for layering.
-    <section ref={containerRef} className="py-32 bg-white/90 relative z-10">
+    // Updated padding: pt-16 pb-24 for mobile symmetry (matching header mb-16)
+    <section ref={containerRef} className="pt-16 pb-24 md:py-24 bg-white/90 relative z-10">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
+        {/* Header Margin: mb-16 on mobile to match pt-16 */}
+        <div className="text-center mb-16 md:mb-16">
           <h2 ref={headingRef} className="text-3xl md:text-5xl font-display font-bold text-dark-gray origin-center">
             Core Competencies & <br/><span className="text-accent-orange">Technical Skills</span>
           </h2>
