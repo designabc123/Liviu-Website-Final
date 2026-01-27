@@ -66,7 +66,7 @@ const Experience: React.FC = () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: row,
-            start: "top 70%", // Trigger a bit earlier for mobile readability
+            start: "top 80%", // Trigger slightly earlier for better mobile feel
             toggleActions: "play none none reverse"
           }
         });
@@ -107,14 +107,8 @@ const Experience: React.FC = () => {
 
         // 1. Date reveals first (0.6s)
         if (date) {
-            const isRightAligned = date.parentElement?.classList.contains('text-right');
-            const dateXStart = isRightAligned ? 50 : -50;
-            // For mobile (center), we might want a different animation, but x movement is fine if subtle
-            // Or we check visibility. Let's keep it simple: small x movement is fine or fade up.
-            // Actually, for the mobile layout, the date is centered.
-            
             tl.fromTo(date, 
-            { opacity: 0, y: 20 }, // Changed to Y axis for better general compatibility
+            { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
             );
         }
@@ -160,11 +154,19 @@ const Experience: React.FC = () => {
   // Helper component to render the Card Content
   const ExperienceCard = ({ role, isLeft, isMobile = false }: { role: ExperienceRole, isLeft: boolean, isMobile?: boolean }) => (
     <div 
-        className={`iso-card-base ${isMobile ? '' : isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} bg-off-white/50 backdrop-blur-sm p-8 rounded-xl relative group w-full z-10`}
+        className={`iso-card-base ${isMobile ? '' : isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} 
+        ${isMobile ? 'bg-white shadow-lg' : 'bg-off-white/50 backdrop-blur-sm'} 
+        p-8 rounded-xl relative group w-full z-10`}
     >
-        {/* Hover Outlines */}
-        <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        {/* Only show grey offset outlines on Desktop */}
+        {/* Mobile: Orange Dot on Top Border */}
+        {isMobile && (
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-accent-orange rounded-full z-20"></div>
+        )}
+
+        {/* Hover Outlines (Desktop Only) */}
+        {!isMobile && (
+             <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        )}
         {!isMobile && (
             <div className={`card-outline-grey ${isLeft ? 'move-left' : 'move-right'} absolute inset-0 border border-gray-300 rounded-xl`}></div>
         )}
@@ -185,12 +187,12 @@ const Experience: React.FC = () => {
             
             <div className="mb-6">
                 <p className="text-sm text-gray-500 italic"><i className="fa-solid fa-location-dot mr-2"></i>{role.location}</p>
-                {/* Mobile Period Tag - removed from inside card for new layout, but kept for fallback or specific Mobile prop check if needed. 
-                    Actually, in the new layout, the date is outside. We can hide it here for mobile if passed isMobile. */}
-                {!isMobile && (
-                   <div className="md:hidden mt-3 inline-block bg-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                
+                {/* Mobile: Date Badge */}
+                {isMobile && (
+                   <span className="bg-black text-white px-3 py-1 rounded-full text-xs font-bold inline-block w-fit mt-3 uppercase tracking-wider">
                      {role.period}
-                   </div>
+                   </span>
                 )}
             </div>
 
@@ -246,20 +248,9 @@ const Experience: React.FC = () => {
                   className={`experience-row relative z-0 ${index > 0 ? 'md:-mt-48' : ''}`}
                 >
                   
-                  {/* --- MOBILE LAYOUT (Centered Stack) --- */}
-                  <div className="md:hidden flex flex-col items-center w-full relative">
-                      
-                      {/* Marker Group (Circle + Date) */}
-                      <div className="flex flex-col items-center mb-6 relative z-10">
-                          {/* Circle on the line */}
-                          <div className="timeline-circle w-5 h-5 bg-accent-orange rounded-full border-4 border-white shadow-md mb-3 z-20"></div>
-                          {/* Date below circle */}
-                          <span className="timeline-date-text text-lg font-display font-bold text-accent-orange bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-orange-100 shadow-sm">
-                              {role.period}
-                          </span>
-                      </div>
-
-                      {/* Content Card */}
+                  {/* --- MOBILE LAYOUT (Solid Cards) --- */}
+                  <div className="md:hidden w-full relative">
+                      {/* Content Card with Top Dot */}
                       <div className="reveal-wrapper w-full relative z-10" data-side="center">
                           <ExperienceCard role={role} isLeft={false} isMobile={true} />
                       </div>
