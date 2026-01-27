@@ -153,6 +153,10 @@ const About: React.FC = () => {
 
   return (
     <section ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-off-white/90 z-20">
+      
+      {/* MOBILE BLEED EFFECT: White Floor */}
+      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-white block md:hidden z-0"></div>
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-start"> 
           
