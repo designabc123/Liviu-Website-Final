@@ -212,10 +212,13 @@ const Experience: React.FC = () => {
   );
 
   return (
-    // Reduced padding-top on mobile (pt-12) to close gap with About section
-    <section ref={containerRef} className="pt-12 md:pt-40 pb-32 bg-white/90 relative overflow-hidden z-10">
+    // SYMMETRY FIX: pt-16 (top padding) equals mb-16 (header bottom margin) on mobile.
+    // SEAMLESS FIX: pb-0 on mobile so the inner spine connects to the bottom.
+    <section ref={containerRef} className="pt-16 md:pt-40 pb-0 md:pb-32 bg-white/90 relative overflow-hidden z-10">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-24">
+        
+        {/* Header Spacing: mb-16 to match pt-16 */}
+        <div className="text-center mb-16 md:mb-24">
           <h2 ref={headingRef} className="text-4xl md:text-6xl font-display font-bold text-dark-gray mb-4 origin-center">
             Experience <span className="text-accent-orange">Timeline</span>
           </h2>
@@ -225,7 +228,7 @@ const Experience: React.FC = () => {
         </div>
 
         {/* Timeline Container - with Perspective */}
-        {/* Added pb-24 for mobile to extend the spine further down */}
+        {/* pb-24 on Mobile ensures spine extends below the last item */}
         <div className="relative perspective-container pb-24 md:pb-0">
           
           {/* DESKTOP SPINE (Hidden on Mobile) */}
