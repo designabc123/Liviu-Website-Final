@@ -155,7 +155,7 @@ const Experience: React.FC = () => {
   const ExperienceCard = ({ role, isLeft, isMobile = false }: { role: ExperienceRole, isLeft: boolean, isMobile?: boolean }) => (
     <div 
         className={`iso-card-base ${isMobile ? '' : isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} 
-        ${isMobile ? 'bg-white shadow-lg' : 'bg-off-white/50 backdrop-blur-sm'} 
+        ${isMobile ? 'bg-gray-50 border border-gray-200 hover:border-accent-orange transition-colors duration-300 shadow-lg' : 'bg-off-white/50 backdrop-blur-sm'} 
         p-8 rounded-xl relative group w-full z-10`}
     >
         {/* Mobile: Orange Dot on Top Border */}
@@ -221,7 +221,8 @@ const Experience: React.FC = () => {
         </div>
 
         {/* Timeline Container - with Perspective */}
-        <div className="relative perspective-container">
+        {/* Added pb-24 for mobile to extend the spine further down */}
+        <div className="relative perspective-container pb-24 md:pb-0">
           
           {/* DESKTOP SPINE (Hidden on Mobile) */}
           <div 
@@ -231,7 +232,7 @@ const Experience: React.FC = () => {
             }}
           ></div>
 
-          {/* MOBILE SPINE (New: Center, Orange) */}
+          {/* MOBILE SPINE (New: Center, Orange, Full Height) */}
           <div 
              className="absolute left-1/2 top-0 bottom-0 w-px transform -translate-x-1/2 z-0 md:hidden bg-accent-orange/30"
           ></div>
