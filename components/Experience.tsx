@@ -66,7 +66,7 @@ const Experience: React.FC = () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: row,
-            start: "top 60%", 
+            start: "top 70%", // Trigger a bit earlier for mobile readability
             toggleActions: "play none none reverse"
           }
         });
@@ -109,29 +109,45 @@ const Experience: React.FC = () => {
         if (date) {
             const isRightAligned = date.parentElement?.classList.contains('text-right');
             const dateXStart = isRightAligned ? 50 : -50;
+            // For mobile (center), we might want a different animation, but x movement is fine if subtle
+            // Or we check visibility. Let's keep it simple: small x movement is fine or fade up.
+            // Actually, for the mobile layout, the date is centered.
             
             tl.fromTo(date, 
-            { opacity: 0, x: dateXStart },
-            { opacity: 1, x: 0, duration: 0.6, ease: "power2.out" }
+            { opacity: 0, y: 20 }, // Changed to Y axis for better general compatibility
+            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
             );
         }
 
         // 2. Circle reveals
-        tl.fromTo(circle,
-          { scale: 2, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" },
-          "<" 
-        );
+        if (circle) {
+            tl.fromTo(circle,
+            { scale: 0, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+            "<" 
+            );
+        }
 
         // 3. Card Wrapper(s) reveal
         wrappers.forEach((wrapper: any) => {
-             const isLeft = wrapper.getAttribute('data-side') === 'left';
-             const cardXStart = isLeft ? -50 : 50;
+             const side = wrapper.getAttribute('data-side');
+             
+             // Determine animation direction based on layout side
+             let startVars = { opacity: 0, x: 0, y: 0 };
+             
+             if (side === 'left') {
+                 startVars.x = -50;
+             } else if (side === 'right') {
+                 startVars.x = 50;
+             } else {
+                 // 'center' / Mobile default: Slide Up
+                 startVars.y = 50;
+             }
              
              tl.fromTo(wrapper,
-                { opacity: 0, x: cardXStart },
-                { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" },
-                "<" 
+                startVars,
+                { opacity: 1, x: 0, y: 0, duration: 0.8, ease: "power3.out" },
+                "-=0.4" // Overlap slightly with circle
             );
         });
       });
@@ -144,41 +160,48 @@ const Experience: React.FC = () => {
   // Helper component to render the Card Content
   const ExperienceCard = ({ role, isLeft, isMobile = false }: { role: ExperienceRole, isLeft: boolean, isMobile?: boolean }) => (
     <div 
-        className={`iso-card-base ${isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} bg-off-white/50 backdrop-blur-sm p-8 rounded-xl relative group w-full z-10`}
+        className={`iso-card-base ${isMobile ? '' : isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} bg-off-white/50 backdrop-blur-sm p-8 rounded-xl relative group w-full z-10`}
     >
         {/* Hover Outlines */}
         <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div className={`card-outline-grey ${isLeft ? 'move-left' : 'move-right'} absolute inset-0 border border-gray-300 rounded-xl`}></div>
+        {/* Only show grey offset outlines on Desktop */}
+        {!isMobile && (
+            <div className={`card-outline-grey ${isLeft ? 'move-left' : 'move-right'} absolute inset-0 border border-gray-300 rounded-xl`}></div>
+        )}
 
-        {/* CONNECTOR LINE */}
-        <div className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-accent-orange -z-10
-            ${isLeft 
-                ? '-right-[60px] w-[60px] origin-left hidden md:block' 
-                : isMobile 
-                    ? '-left-16 w-16' 
+        {/* CONNECTOR LINE - Only for Desktop */}
+        {!isMobile && (
+            <div className={`absolute top-1/2 -translate-y-1/2 h-[1px] bg-accent-orange -z-10
+                ${isLeft 
+                    ? '-right-[60px] w-[60px] origin-left hidden md:block' 
                     : '-left-[60px] w-[60px]'
-            }
-        `}></div>
+                }
+            `}></div>
+        )}
 
         <div className="relative z-10">
-        <h3 className="text-2xl font-bold text-dark-gray mb-1">{role.title}</h3>
-        <h4 className="text-accent-orange font-semibold mb-1">{role.company}</h4>
-        
-        <div className="mb-6">
-            <p className="text-sm text-gray-500 italic"><i className="fa-solid fa-location-dot mr-2"></i>{role.location}</p>
-            <div className="md:hidden mt-3 inline-block bg-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                {role.period}
+            <h3 className="text-2xl font-bold text-dark-gray mb-1">{role.title}</h3>
+            <h4 className="text-accent-orange font-semibold mb-1">{role.company}</h4>
+            
+            <div className="mb-6">
+                <p className="text-sm text-gray-500 italic"><i className="fa-solid fa-location-dot mr-2"></i>{role.location}</p>
+                {/* Mobile Period Tag - removed from inside card for new layout, but kept for fallback or specific Mobile prop check if needed. 
+                    Actually, in the new layout, the date is outside. We can hide it here for mobile if passed isMobile. */}
+                {!isMobile && (
+                   <div className="md:hidden mt-3 inline-block bg-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                     {role.period}
+                   </div>
+                )}
             </div>
-        </div>
 
-        <ul className="space-y-3">
-            {role.details.map((detail, idx) => (
-                <li key={idx} className="flex items-start text-gray-600 text-sm leading-relaxed">
-                <i className="fa-solid fa-caret-right text-accent-orange mt-1 mr-3 flex-shrink-0"></i>
-                <span>{detail}</span>
-                </li>
-            ))}
-        </ul>
+            <ul className="space-y-3">
+                {role.details.map((detail, idx) => (
+                    <li key={idx} className="flex items-start text-gray-600 text-sm leading-relaxed">
+                    <i className="fa-solid fa-caret-right text-accent-orange mt-1 mr-3 flex-shrink-0"></i>
+                    <span>{detail}</span>
+                    </li>
+                ))}
+            </ul>
         </div>
     </div>
   );
@@ -197,72 +220,99 @@ const Experience: React.FC = () => {
 
         {/* Timeline Container - with Perspective */}
         <div className="relative perspective-container">
+          
+          {/* DESKTOP SPINE (Hidden on Mobile) */}
           <div 
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px transform md:-translate-x-1/2 z-0"
+            className="absolute left-1/2 top-0 bottom-0 w-px transform -translate-x-1/2 z-0 hidden md:block"
             style={{
               background: 'linear-gradient(to bottom, transparent 0%, #e5e5e5 5%, #e5e5e5 95%, transparent 100%)'
             }}
           ></div>
 
-          <div className="space-y-16 md:space-y-0">
+          {/* MOBILE SPINE (New: Center, Orange) */}
+          <div 
+             className="absolute left-1/2 top-0 bottom-0 w-px transform -translate-x-1/2 z-0 md:hidden bg-accent-orange/30"
+          ></div>
+
+          <div className="space-y-12 md:space-y-0">
             {EXPERIENCE_DATA.map((role, index) => {
-              const isEven = index % 2 === 0; // Card on Right, Date on Left
+              const isEven = index % 2 === 0; // Card on Right, Date on Left (Desktop)
               const isRightCard = isEven;
               const graphic = EXPERIENCE_GRAPHICS[index] || EXPERIENCE_GRAPHICS[0];
               
               return (
                 <div 
                   key={index} 
-                  className={`experience-row grid grid-cols-[auto_1fr] md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-0 items-center relative z-0 pointer-events-none ${index > 0 ? 'md:-mt-48' : ''}`}
+                  className={`experience-row relative z-0 ${index > 0 ? 'md:-mt-48' : ''}`}
                 >
                   
-                  {/* LEFT COLUMN */}
-                  <div className="hidden md:flex justify-end pr-12 w-full perspective-container relative">
-                    
-                    {/* Even Index (0, 2, 4): Image is on Left Side (same as Date) */}
-                    {isEven && (
-                        <div className={`absolute left-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 hidden md:block pointer-events-none`}>
-                             <img 
-                                src={graphic.src} 
-                                alt={`Experience Graphic ${index + 1}`}
-                                className="experience-graphic w-full h-auto opacity-0"
-                            />
-                        </div>
-                    )}
+                  {/* --- MOBILE LAYOUT (Centered Stack) --- */}
+                  <div className="md:hidden flex flex-col items-center w-full relative">
+                      
+                      {/* Marker Group (Circle + Date) */}
+                      <div className="flex flex-col items-center mb-6 relative z-10">
+                          {/* Circle on the line */}
+                          <div className="timeline-circle w-5 h-5 bg-accent-orange rounded-full border-4 border-white shadow-md mb-3 z-20"></div>
+                          {/* Date below circle */}
+                          <span className="timeline-date-text text-lg font-display font-bold text-accent-orange bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-orange-100 shadow-sm">
+                              {role.period}
+                          </span>
+                      </div>
 
-                    {isRightCard ? (
-                      <div className="timeline-date text-right w-full pointer-events-auto relative z-10">
-                         <span className="timeline-date-text block text-2xl lg:text-3xl font-display font-bold text-accent-orange leading-none">
-                          {role.period}
-                        </span>
+                      {/* Content Card */}
+                      <div className="reveal-wrapper w-full relative z-10" data-side="center">
+                          <ExperienceCard role={role} isLeft={false} isMobile={true} />
                       </div>
-                    ) : (
-                      <div className="reveal-wrapper w-full pointer-events-auto relative z-10" data-side="left">
-                         <ExperienceCard role={role} isLeft={true} />
-                      </div>
-                    )}
                   </div>
 
-                  {/* CENTER COLUMN */}
-                  <div className="relative flex justify-center items-center h-full z-40">
-                     <div className="timeline-circle w-6 h-6 bg-accent-orange rounded-full border-4 border-white flex-shrink-0 shadow-sm"></div>
-                  </div>
 
-                  {/* RIGHT COLUMN */}
-                  <div className="pl-4 md:pl-12 w-full perspective-container relative">
+                  {/* --- DESKTOP LAYOUT (Grid) --- */}
+                  <div className="hidden md:grid grid-cols-[1fr_auto_1fr] gap-0 items-center w-full perspective-container">
                     
-                    {/* Odd Index (1, 3, 5): Image is on Right Side (same as Date) */}
-                    {!isEven && (
-                        <div className={`absolute right-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 hidden md:block pointer-events-none`}>
-                             <img 
-                                src={graphic.src} 
-                                alt={`Experience Graphic ${index + 1}`}
-                                className="experience-graphic w-full h-auto opacity-0"
-                            />
-                        </div>
-                    )}
+                    {/* LEFT COLUMN */}
+                    <div className="flex justify-end pr-12 w-full perspective-container relative">
+                        {/* Graphics Logic */}
+                        {isEven && (
+                            <div className={`absolute left-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 pointer-events-none`}>
+                                <img 
+                                    src={graphic.src} 
+                                    alt={`Experience Graphic ${index + 1}`}
+                                    className="experience-graphic w-full h-auto opacity-0"
+                                />
+                            </div>
+                        )}
 
-                    <div className="hidden md:block">
+                        {isRightCard ? (
+                            <div className="timeline-date text-right w-full pointer-events-auto relative z-10">
+                                <span className="timeline-date-text block text-2xl lg:text-3xl font-display font-bold text-accent-orange leading-none">
+                                    {role.period}
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="reveal-wrapper w-full pointer-events-auto relative z-10" data-side="left">
+                                <ExperienceCard role={role} isLeft={true} />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* CENTER COLUMN */}
+                    <div className="relative flex justify-center items-center h-full z-40">
+                        <div className="timeline-circle w-6 h-6 bg-accent-orange rounded-full border-4 border-white flex-shrink-0 shadow-sm"></div>
+                    </div>
+
+                    {/* RIGHT COLUMN */}
+                    <div className="pl-12 w-full perspective-container relative">
+                        {/* Graphics Logic */}
+                        {!isEven && (
+                            <div className={`absolute right-0 top-1/2 -translate-y-1/2 ${graphic.margin} ${graphic.width} ${graphic.nudgeDesktop || ''} z-0 pointer-events-none`}>
+                                <img 
+                                    src={graphic.src} 
+                                    alt={`Experience Graphic ${index + 1}`}
+                                    className="experience-graphic w-full h-auto opacity-0"
+                                />
+                            </div>
+                        )}
+
                         {isRightCard ? (
                             <div className="reveal-wrapper w-full pointer-events-auto relative z-10" data-side="right">
                                 <ExperienceCard role={role} isLeft={false} />
@@ -270,15 +320,10 @@ const Experience: React.FC = () => {
                         ) : (
                             <div className="timeline-date text-left w-full pointer-events-auto relative z-10">
                                 <span className="timeline-date-text block text-2xl lg:text-3xl font-display font-bold text-accent-orange leading-none">
-                                {role.period}
+                                    {role.period}
                                 </span>
                             </div>
                         )}
-                    </div>
-                    <div className="md:hidden">
-                        <div className="reveal-wrapper w-full pointer-events-auto relative z-10" data-side="right">
-                            <ExperienceCard role={role} isLeft={false} isMobile={true} />
-                        </div>
                     </div>
                   </div>
 
