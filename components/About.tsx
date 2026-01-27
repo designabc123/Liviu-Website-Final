@@ -174,10 +174,7 @@ const About: React.FC = () => {
               Strategic<br />Multidisciplinary Design
             </h2>
             <div className="text-lg text-gray-600 space-y-6 leading-relaxed font-light">
-               <p>{CV_DATA.bio.split('.')[0]}. {CV_DATA.bio.split('.')[1]}.</p>
-               <p className="border-l-4 border-accent-orange pl-6 italic text-gray-800 font-medium">
-                 {CV_DATA.bio.split('Provenance')[0].split('Expert')[0].split('portfolios.')[1]}
-               </p>
+               <p>{CV_DATA.bio.split('execution.')[0]}execution.</p>
                <p>{CV_DATA.bio.split('execution.')[1]}</p>
             </div>
             

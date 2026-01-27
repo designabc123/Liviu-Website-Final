@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
   return (
-    // Removed h-screen, kept py-24. Added overflow-hidden to crop the background text
-    <footer id="contact" className="bg-dark-gray text-white py-24 relative overflow-hidden flex flex-col justify-center">
+    // Reduced padding from py-24 to py-20 to tighten layout while maintaining symmetry
+    <footer id="contact" className="bg-dark-gray text-white py-20 relative overflow-hidden flex flex-col justify-center">
       <div className="container mx-auto px-6 relative z-10 text-center">
         
         {/* Animated Heading with Framer Motion - Reversible */}
@@ -20,22 +20,30 @@ const Footer: React.FC = () => {
         </motion.h2>
         
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 mb-16">
-          <a href={`mailto:${CV_DATA.email}`} className="group flex items-center text-xl hover:text-accent-orange transition-colors">
-            <div className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center mr-4 group-hover:border-accent-orange transition-colors">
+          <a href={`mailto:${CV_DATA.email}`} className="group flex items-center gap-4 text-xl text-gray-300 hover:text-white transition-colors">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 text-white group-hover:bg-accent-orange transition-all duration-300 flex-shrink-0">
               <i className="fa-regular fa-envelope"></i>
             </div>
             {CV_DATA.email}
           </a>
           
-          <a href={`https://${CV_DATA.linkedin}`} target="_blank" rel="noreferrer" className="group flex items-center text-xl hover:text-accent-orange transition-colors">
-            <div className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center mr-4 group-hover:border-accent-orange transition-colors">
+          <a href={`https://${CV_DATA.linkedin}`} target="_blank" rel="noreferrer" className="group flex items-center gap-4 text-xl text-gray-300 hover:text-white transition-colors">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 text-white group-hover:bg-accent-orange transition-all duration-300 flex-shrink-0">
               <i className="fa-brands fa-linkedin-in"></i>
             </div>
             LinkedIn Profile
           </a>
+
+          {/* Phone Number */}
+          <a href="tel:+353864150609" className="group flex items-center gap-4 text-xl text-gray-300 hover:text-white transition-colors">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 text-white group-hover:bg-accent-orange transition-all duration-300 flex-shrink-0">
+              <i className="fa-solid fa-mobile-screen"></i>
+            </div>
+            +353 86 415 0609
+          </a>
         </div>
         
-        <div className="border-t border-white/10 pt-8 text-white/40 text-sm">
+        <div className="text-white/40 text-sm">
           <p>© {new Date().getFullYear()} {CV_DATA.name}. All Rights Reserved.</p>
         </div>
       </div>

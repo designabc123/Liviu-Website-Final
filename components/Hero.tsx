@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
         <div ref={textRef} className="origin-center will-change-transform">
           <h1 className="font-display font-bold leading-[0.9] tracking-tight mb-8 flex flex-col items-center">
             <span className="text-dark-gray text-[8vw] md:text-7xl lg:text-8xl xl:text-9xl whitespace-nowrap">
-              VISUALIZING THE
+              VISUALISING THE
             </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-orange to-orange-400 text-[8vw] md:text-7xl lg:text-8xl xl:text-9xl whitespace-nowrap">
               SCIENCE OF LIFE
