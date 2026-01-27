@@ -155,7 +155,10 @@ const Experience: React.FC = () => {
   const ExperienceCard = ({ role, isLeft, isMobile = false }: { role: ExperienceRole, isLeft: boolean, isMobile?: boolean }) => (
     <div 
         className={`iso-card-base ${isMobile ? '' : isLeft ? 'iso-card-left origin-right' : 'iso-card-right origin-left'} 
-        ${isMobile ? 'bg-gray-50 border border-gray-200 hover:border-accent-orange transition-colors duration-300 shadow-lg' : 'bg-off-white/50 backdrop-blur-sm'} 
+        ${isMobile 
+            ? 'bg-[#FAFAFA] border border-gray-200 hover:border-accent-orange transition-colors duration-300 shadow-lg' 
+            : 'bg-[#FAFAFA]/80 backdrop-blur-sm'
+        } 
         p-8 rounded-xl relative group w-full z-10`}
     >
         {/* Mobile: Orange Dot on Top Border */}
@@ -209,7 +212,8 @@ const Experience: React.FC = () => {
   );
 
   return (
-    <section ref={containerRef} className="pt-40 pb-32 bg-white/90 relative overflow-hidden z-10">
+    // Reduced padding-top on mobile (pt-12) to close gap with About section
+    <section ref={containerRef} className="pt-12 md:pt-40 pb-32 bg-white/90 relative overflow-hidden z-10">
       <div className="container mx-auto px-6">
         <div className="text-center mb-24">
           <h2 ref={headingRef} className="text-4xl md:text-6xl font-display font-bold text-dark-gray mb-4 origin-center">
