@@ -152,11 +152,12 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    // RESTORED: bg-off-white (no opacity) to ensure solid light grey contrast against the white bleed strip.
-    <section ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-off-white z-20">
+    // RESTORED: bg-gray-100 for clear contrast against the white bleed strip.
+    <section ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-gray-100 z-20">
       
-      {/* MOBILE BLEED EFFECT: White Floor (100px strip at bottom) */}
-      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-white block md:hidden z-0"></div>
+      {/* MOBILE/TABLET BLEED EFFECT: White Floor (100px strip at bottom) */}
+      {/* Visible on Stacked Layout (below lg) */}
+      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-white block lg:hidden z-0"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-start"> 
@@ -183,8 +184,11 @@ const About: React.FC = () => {
           {/* Video Column - Dual Mode */}
           <div className="lg:w-1/2 relative w-full">
              <div 
-                // Ensure z-30 to sit on top of the bleed strip (z-0)
-                className="relative z-30 lg:-mb-20 aspect-square w-full max-w-[550px] ml-auto bg-cover bg-center rounded-[20px] shadow-2xl"
+                // ALIGNMENT FIX:
+                // Stacked (Mobile/Tablet): mr-auto (Left Aligned)
+                // Desktop: lg:ml-auto lg:mr-0 (Right Aligned)
+                // Z-INDEX: z-30 to sit on top of z-0 white strip.
+                className="relative z-30 lg:-mb-20 aspect-square w-full max-w-[550px] mr-auto lg:mr-0 lg:ml-auto bg-cover bg-center rounded-[20px] shadow-2xl"
                 style={{ backgroundImage: `url(${POSTER_URL})` }}
              >
                 
