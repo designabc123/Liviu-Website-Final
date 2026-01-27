@@ -152,14 +152,19 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    // RESTORED: bg-gray-100 for clear contrast against the white bleed strip.
+    // LAYER ROOT: bg-gray-100 (Darker than off-white for contrast)
     <section ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-gray-100 z-20">
       
-      {/* MOBILE/TABLET BLEED EFFECT: White Floor (100px strip at bottom) */}
-      {/* Visible on Stacked Layout (below lg) */}
-      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-white block lg:hidden z-0"></div>
+      {/* LAYER 1 (Bottom): Background Texture - z-0 */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-grid-pattern opacity-50 z-0 pointer-events-none"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      {/* LAYER 2 (Middle): White Bleed Box - z-10 
+          This sits ON TOP of the texture (hiding it) but BELOW the content.
+          Visible only on stacked layouts (lg:hidden). */}
+      <div className="absolute bottom-0 left-0 w-full h-[100px] bg-white block lg:hidden z-10"></div>
+
+      {/* LAYER 3 (Top): Content - z-20 */}
+      <div className="container mx-auto px-6 relative z-20">
         <div className="flex flex-col lg:flex-row items-start"> 
           
           {/* Text Column */}
@@ -184,10 +189,8 @@ const About: React.FC = () => {
           {/* Video Column - Dual Mode */}
           <div className="lg:w-1/2 relative w-full">
              <div 
-                // ALIGNMENT FIX:
-                // Stacked (Mobile/Tablet): mr-auto (Left Aligned)
-                // Desktop: lg:ml-auto lg:mr-0 (Right Aligned)
-                // Z-INDEX: z-30 to sit on top of z-0 white strip.
+                // VIDEO LAYER: z-30 (Above Content z-20)
+                // ALIGNMENT: mr-auto (Left) on mobile/tablet, right aligned on desktop
                 className="relative z-30 lg:-mb-20 aspect-square w-full max-w-[550px] mr-auto lg:mr-0 lg:ml-auto bg-cover bg-center rounded-[20px] shadow-2xl"
                 style={{ backgroundImage: `url(${POSTER_URL})` }}
              >
@@ -238,9 +241,6 @@ const About: React.FC = () => {
           
         </div>
       </div>
-      
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-grid-pattern opacity-50 z-0 pointer-events-none"></div>
     </section>
   );
 };
