@@ -112,7 +112,11 @@ export const CORE_COMPETENCIES: ServiceItem[] = [
   {
     title: "Motion & 3D",
     icon: "fa-cube",
-    description: "Expert utilization of Cinema 4D and After Effects to create high-end motion graphics, realistic 3D visualizations, and complex medical animations that simplify intricate scientific concepts."
+    description: "Expert utilization of Cinema 4D and After Effects to create high-end motion graphics, realistic 3D visualizations, and complex medical animations that simplify intricate scientific concepts.",
+    icons: [
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553882/Cinema_4D_bd5vsf.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553881/After_Effects_ziocru.png'
+    ]
   },
   {
     title: "Photography",
@@ -122,12 +126,27 @@ export const CORE_COMPETENCIES: ServiceItem[] = [
   {
     title: "Software Toolkit",
     icon: "fa-layer-group",
-    description: "Mastery of the full Adobe Creative Cloud suite including Photoshop, Illustrator, InDesign, After Effects, Premiere Pro, and XD, alongside proficiency in Microsoft Office for corporate integration."
+    description: "Mastery of the full Adobe Creative Cloud suite including Photoshop, Illustrator, InDesign, After Effects, Premiere Pro, and XD, alongside proficiency in Microsoft Office for corporate integration.",
+    icons: [
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553882/Adobe_Photoshop_o8x7hp.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553881/Adobe_Illustrator_go2aaw.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553879/InDesign_l4vowe.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553880/Premiere_Pro_eowi7f.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553881/After_Effects_ziocru.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553880/Adobe_Lightroom_mhuu7f.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553879/Adobe_Xd_mijjv1.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553884/Office365_swriqi.png'
+    ]
   },
   {
     title: "Emerging Tech",
     icon: "fa-microchip",
-    description: "Leveraging cutting-edge AI-assisted workflows for rapid ideation and asset generation, combined with a solid foundational knowledge of HTML and CSS to bridge design and development."
+    description: "Leveraging cutting-edge AI-assisted workflows for rapid ideation and asset generation, combined with a solid foundational knowledge of HTML and CSS to bridge design and development.",
+    icons: [
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553887/ChatGPT_cpb2dg.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553885/Gemini_iyo6fv.png',
+      'https://res.cloudinary.com/dao9flvhw/image/upload/v1769553885/NotebookLM_jvlrd0.png'
+    ]
   },
   {
     title: "Event & Brand Experience",

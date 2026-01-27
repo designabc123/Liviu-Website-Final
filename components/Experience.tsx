@@ -229,13 +229,13 @@ const Experience: React.FC = () => {
 
         {/* Timeline Container - with Perspective */}
         {/* pb-24 on Mobile ensures spine extends below the last item */}
-        <div className="relative perspective-container pb-24 md:pb-0">
+        <div className="relative perspective-container pb-24 md:pb-0 overflow-visible">
           
           {/* DESKTOP SPINE (Hidden on Mobile) */}
           <div 
-            className="absolute left-1/2 top-0 bottom-0 w-px transform -translate-x-1/2 z-0 hidden md:block"
+            className="absolute left-1/2 top-0 bottom-0 md:-bottom-32 w-px transform -translate-x-1/2 z-0 hidden md:block"
             style={{
-              background: 'linear-gradient(to bottom, transparent 0%, #e5e5e5 5%, #e5e5e5 95%, transparent 100%)'
+              background: 'linear-gradient(to bottom, transparent 0%, #e5e5e5 5%, #e5e5e5 100%)'
             }}
           ></div>
 

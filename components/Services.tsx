@@ -50,7 +50,7 @@ const Services: React.FC = () => {
               key={index}
               className="perspective-container group"
             >
-                {/* Changed: Removed 'iso-card-right' to make cards flat by default */}
+                {/* Card Base */}
                 <div className="iso-card-base bg-white p-10 rounded-xl relative h-full">
                     {/* Hover Outlines */}
                     <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -59,14 +59,30 @@ const Services: React.FC = () => {
                     <div className="card-outline-grey move-right absolute inset-0 border border-gray-300 rounded-xl"></div>
 
                     {/* Content */}
-                    <div className="relative z-10">
-                        <div className="w-16 h-16 bg-accent-orange/10 rounded-full flex items-center justify-center mb-8 group-hover:bg-accent-orange transition-colors duration-300">
-                            <i className={`fa-solid ${service.icon} text-2xl text-accent-orange group-hover:text-white transition-colors duration-300`}></i>
+                    <div className="relative z-10 flex flex-col h-full justify-between">
+                        <div>
+                            <div className="w-16 h-16 bg-accent-orange/10 rounded-full flex items-center justify-center mb-8 group-hover:bg-accent-orange transition-colors duration-300">
+                                <i className={`fa-solid ${service.icon} text-2xl text-accent-orange group-hover:text-white transition-colors duration-300`}></i>
+                            </div>
+                            <h3 className="text-xl font-bold text-dark-gray mb-4">{service.title}</h3>
+                            <p className="text-gray-500 leading-relaxed text-sm">
+                                {service.description}
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold text-dark-gray mb-4">{service.title}</h3>
-                        <p className="text-gray-500 leading-relaxed text-sm">
-                            {service.description}
-                        </p>
+
+                        {/* Software Icons Row */}
+                        {service.icons && (
+                          <div className="mt-auto pt-6 border-t border-gray-100 flex flex-wrap gap-3 items-center mt-6">
+                            {service.icons.map((iconUrl, i) => (
+                              <img
+                                key={i}
+                                src={iconUrl}
+                                alt="Software Icon"
+                                className="h-8 w-auto object-contain"
+                              />
+                            ))}
+                          </div>
+                        )}
                     </div>
                 </div>
             </div>
