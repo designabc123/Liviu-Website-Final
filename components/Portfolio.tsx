@@ -141,7 +141,22 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
       { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639209/Mag_08_jtcjlj.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639209/Mag_08_jtcjlj.jpg' }
     ] 
   },
-  { id: 'packaging', title: 'PACKAGING', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'packaging', 
+    title: 'PACKAGING', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639692/klerasca_rosacea_01_fwery5.png', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639692/klerasca_rosacea_01_fwery5.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639692/klerasca_rosacea_01_fwery5.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639696/Safe_Test_cleypb.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639696/Safe_Test_cleypb.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639694/Nervisel_b6skkl.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639694/Nervisel_b6skkl.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639688/Herbal_Tea_nwugjt.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639688/Herbal_Tea_nwugjt.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639686/End_of_Acne_klnxch.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639686/End_of_Acne_klnxch.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639686/FluEnd_cejiic.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639686/FluEnd_cejiic.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639684/Cardio_gp16rs.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639684/Cardio_gp16rs.jpg' }
+    ]
+  },
   { 
     id: 'photo', 
     title: 'PHOTOGRAPHY', 
