@@ -17,22 +17,22 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <nav className="absolute top-0 left-0 w-full z-50 px-6 py-6 flex flex-wrap justify-between items-center bg-transparent">
+    <nav className="absolute top-0 left-0 w-full z-50 px-4 md:px-6 py-6 flex flex-nowrap justify-between items-center bg-transparent">
       {/* Logo */}
       <div 
-        className="text-3xl md:text-4xl font-bold font-display tracking-tighter text-dark-gray z-50 select-none cursor-pointer"
+        className="text-2xl md:text-4xl font-bold font-display tracking-tighter text-dark-gray z-50 select-none cursor-pointer shrink-0 mr-2 md:mr-0"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         LL<span className="text-accent-orange">.</span>
       </div>
       
       {/* Navigation Menu */}
-      <ul className="flex gap-4 md:gap-8 flex-wrap justify-end items-center">
+      <ul className="flex gap-2 md:gap-8 flex-nowrap justify-end items-center">
         {navItems.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="shrink-0">
             <button
               onClick={() => scrollToSection(item.id)}
-              className="text-sm md:text-base font-bold text-dark-gray hover:text-accent-orange transition-colors duration-300 uppercase tracking-widest bg-transparent border-none cursor-pointer outline-none"
+              className="text-[10px] md:text-base font-bold text-dark-gray hover:text-accent-orange transition-colors duration-300 uppercase tracking-tight md:tracking-widest bg-transparent border-none cursor-pointer outline-none whitespace-nowrap"
             >
               {item.label}
             </button>

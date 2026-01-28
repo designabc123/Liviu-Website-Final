@@ -35,17 +35,22 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // DEBUG: Check state before processing
+    console.log("Form Data Check:", formData);
+
     setStatus('sending');
 
-    // MAPPING FIX: Ensure keys match the EmailJS template variables exactly
+    // MAPPING FIX: Updated keys to match standard EmailJS template variables
     const templateParams = {
-      user_name: formData.name,
-      user_email: formData.email,
-      user_phone: formData.phone,
-      message: formData.message
+      from_name: formData.name,       // Matches {{from_name}}
+      from_email: formData.email,     // Matches {{from_email}}
+      phone_number: formData.phone,   // Matches {{phone_number}}
+      message: formData.message       // Matches {{message}}
     };
 
-    console.log("Sending Data:", templateParams);
+    // DEBUG: Check payload
+    console.log("Sending to EmailJS:", templateParams);
 
     emailjs.send(
       EMAILJS_SERVICE_ID,
