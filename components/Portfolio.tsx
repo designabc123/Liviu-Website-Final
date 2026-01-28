@@ -74,9 +74,43 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
       { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464984/2025_1_r9uzlv.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769464984/2025_1_r9uzlv.jpg' }
     ]
   },
-  { id: 'illustration', title: 'ILLUSTRATION', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'illustration', 
+    title: 'ILLUSTRATION', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637318/Skin_Vector_or66qs.jpg', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637318/Skin_Vector_or66qs.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637318/Skin_Vector_or66qs.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637317/Rory_e4vyys.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637317/Rory_e4vyys.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637316/Multitasking_zpwolk.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637316/Multitasking_zpwolk.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637315/Rocket_Boy_pxwpxp.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637315/Rocket_Boy_pxwpxp.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637314/Growing_Golfers_cb0wsb.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637314/Growing_Golfers_cb0wsb.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637320/Skin_iofb0z.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637320/Skin_iofb0z.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637313/Cool_Dog_wnwzkh.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637313/Cool_Dog_wnwzkh.jpg' }
+    ] 
+  },
   { id: 'infographic', title: 'INFOGRAPHIC DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
-  { id: 'logo', title: 'LOGO DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'logo', 
+    title: 'LOGO DESIGN', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636055/LumiHeal-Logo-01-Black_susqjs.png', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636055/LumiHeal-Logo-01-Black_susqjs.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636055/LumiHeal-Logo-01-Black_susqjs.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636062/Walton_Media_h0d1fi.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636062/Walton_Media_h0d1fi.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636060/Twin_Oaks_xmxrw2.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636060/Twin_Oaks_xmxrw2.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636057/Saltwater_mxkfw0.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636057/Saltwater_mxkfw0.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636058/Small_Logo_Rotate_00160_dtcwx7.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636058/Small_Logo_Rotate_00160_dtcwx7.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636054/Cubiquity_mwyzrb.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636054/Cubiquity_mwyzrb.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636054/Klox-Logo-Round-Black_f5h2jl.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636054/Klox-Logo-Round-Black_f5h2jl.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636052/Compact-Positive_ewuyke.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636052/Compact-Positive_ewuyke.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636052/FB-Logo_ixm7d8.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636052/FB-Logo_ixm7d8.png' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/CineTraveler_re4rid.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/CineTraveler_re4rid.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/Cambridge_Editors_jyekts.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/Cambridge_Editors_jyekts.jpg' }
+    ]
+  },
   { id: 'magazine', title: 'MAGAZINE DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { id: 'packaging', title: 'PACKAGING', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { 
@@ -293,29 +327,20 @@ const CategoryCard: React.FC<{ item: PortfolioItem, onClick: () => void }> = ({ 
         />
       )}
 
-      {/* 3. Dark Overlay (Gradient) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
+      {/* 3. Overlay (Subtle tint only) */}
+      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
 
-      {/* 4. Text Content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-        <h3 className="text-2xl md:text-3xl font-display font-bold text-white uppercase tracking-widest text-center">
+      {/* 4. Text Content (Pill) - UPDATED POSITION & STYLE */}
+      <div className="absolute bottom-6 left-6 z-20 flex flex-col items-start">
+        <h3 className="bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
           {item.title}
         </h3>
         
         {/* TBC Badge */}
         {isTbc && (
-          <span className="mt-2 text-[10px] font-bold uppercase tracking-widest bg-white/20 text-white px-2 py-1 rounded">
+          <span className="mt-2 text-[9px] font-bold uppercase tracking-widest bg-black/50 text-white px-2 py-1 rounded backdrop-blur-sm">
             Coming Soon
           </span>
-        )}
-        
-        {/* Interaction Cue */}
-        {!isTbc && (
-          <div className="absolute bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
-             <span className="text-accent-orange text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-               View Projects <i className="fa-solid fa-arrow-right"></i>
-             </span>
-          </div>
         )}
       </div>
     </div>
