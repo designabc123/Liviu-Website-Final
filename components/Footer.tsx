@@ -50,7 +50,8 @@ const Footer: React.FC = () => {
       
       {/* Decorative large text bg - Centered and Huge (Vertical Crop) */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] md:text-[500px] lg:text-[750px] font-display font-bold text-white opacity-[0.03] leading-[0.8] whitespace-nowrap">
+        {/* Fixed vertical centering with transform and line-height */}
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] md:text-[400px] lg:text-[500px] font-display font-bold text-white opacity-[0.03] leading-[0.8] whitespace-nowrap">
           LIVIU
         </span>
       </div>

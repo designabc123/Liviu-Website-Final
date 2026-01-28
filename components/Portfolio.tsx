@@ -339,7 +339,7 @@ const Portfolio: React.FC = () => {
 
   return (
     // Updated padding: pt-16 pb-24 for mobile symmetry (matching header mb-16)
-    <section ref={containerRef} className="pt-16 pb-24 md:py-24 bg-off-white/90 relative z-10">
+    <section id="portfolio" ref={containerRef} className="pt-16 pb-24 md:py-24 bg-off-white/90 relative z-10">
       <div className="container mx-auto px-6 relative z-10">
         
         {/* Section Header: mb-16 on mobile to match pt-16 */}

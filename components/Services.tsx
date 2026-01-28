@@ -35,7 +35,7 @@ const Services: React.FC = () => {
 
   return (
     // Updated padding: pt-16 pb-24 for mobile symmetry (matching header mb-16)
-    <section ref={containerRef} className="pt-16 pb-24 md:py-24 bg-white/90 relative z-10">
+    <section id="competencies" ref={containerRef} className="pt-16 pb-24 md:py-24 bg-white/90 relative z-10">
       <div className="container mx-auto px-6">
         {/* Header Margin: mb-16 on mobile to match pt-16 */}
         <div className="text-center mb-16 md:mb-16">
@@ -51,7 +51,7 @@ const Services: React.FC = () => {
               className="perspective-container group"
             >
                 {/* Card Base */}
-                <div className="iso-card-base bg-white p-10 rounded-xl relative h-full">
+                <div className="iso-card-base bg-[#FAFAFA]/80 backdrop-blur-sm p-10 rounded-xl relative h-full">
                     {/* Hover Outlines */}
                     <div className="card-outline-orange absolute inset-0 border border-accent-orange rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     

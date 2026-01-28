@@ -41,6 +41,10 @@ const Hero: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
+  const scrollToAbout = () => {
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     // Changed bg-white to bg-white/90 for parallax transparency. Added z-10 relative.
     <section ref={containerRef} className="relative z-10 h-screen w-full overflow-hidden flex items-center justify-center bg-white/90">
@@ -84,9 +88,13 @@ const Hero: React.FC = () => {
           Bridging the gap between complex medical data and compelling visual storytelling.
         </p>
         
-        <div className="mt-12 animate-bounce">
-          <i className="fa-solid fa-arrow-down text-accent-orange text-2xl"></i>
-        </div>
+        <button 
+          onClick={scrollToAbout}
+          className="mt-12 animate-bounce cursor-pointer hover:text-accent-orange text-accent-orange transition-colors duration-300 bg-transparent border-none p-0 outline-none group"
+          aria-label="Scroll to About Section"
+        >
+          <i className="fa-solid fa-arrow-down text-2xl group-hover:scale-110 transition-transform"></i>
+        </button>
       </div>
     </section>
   );

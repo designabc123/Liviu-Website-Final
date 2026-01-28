@@ -214,7 +214,7 @@ const Experience: React.FC = () => {
   return (
     // SYMMETRY FIX: pt-16 (top padding) equals mb-16 (header bottom margin) on mobile.
     // SEAMLESS FIX: pb-0 on mobile so the inner spine connects to the bottom.
-    <section ref={containerRef} className="pt-16 md:pt-40 pb-0 md:pb-32 bg-white/90 relative overflow-hidden z-10">
+    <section id="experience" ref={containerRef} className="pt-16 md:pt-40 pb-0 md:pb-32 bg-white/90 relative overflow-hidden z-10">
       <div className="container mx-auto px-6">
         
         {/* Header Spacing: mb-16 to match pt-16 */}

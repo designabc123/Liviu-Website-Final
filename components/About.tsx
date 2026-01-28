@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CV_DATA } from '../constants';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { useScroll, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useMotionValueEvent, AnimatePresence, motion } from 'framer-motion';
+// @ts-ignore
+import emailjs from 'https://esm.sh/@emailjs/browser@3.11.0';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,9 +14,171 @@ const DESKTOP_VIDEO_URL = "https://res.cloudinary.com/dao9flvhw/video/upload/v17
 // Ping-Pong video has the reverse motion baked in for a seamless loop on mobile
 const MOBILE_VIDEO_URL = "https://res.cloudinary.com/dao9flvhw/video/upload/v1769457701/Liviu_Profile_Animation_Ping_Pong_720_qetc31.mp4";
 
+// EMAILJS CONFIG
+const EMAILJS_SERVICE_ID = "service_bqc6gzk";
+const EMAILJS_TEMPLATE_ID = "template_zetnijk";
+const EMAILJS_PUBLIC_KEY = "WiBNxYYDT9eYBkVd6";
+
+// --- CONTACT MODAL COMPONENT ---
+const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: formData.name,
+        reply_to: formData.email,
+        phone_number: formData.phone,
+        message: formData.message,
+      },
+      EMAILJS_PUBLIC_KEY
+    )
+    .then(() => {
+      setStatus('success');
+      setTimeout(() => {
+        setStatus('idle');
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        onClose();
+      }, 2000);
+    })
+    .catch((err: any) => {
+      console.error('Failed to send email:', err);
+      setStatus('error');
+    });
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg bg-white rounded-[32px] overflow-hidden shadow-2xl border border-gray-200 p-8 md:p-10 relative"
+          >
+            {/* Close Button */}
+            <button 
+              onClick={onClose}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-dark-gray hover:bg-accent-orange hover:text-white transition-colors"
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 className="text-3xl font-display font-bold text-dark-gray mb-2">Get in Touch</h3>
+            <p className="text-gray-500 mb-8 text-sm">Fill out the form below and I'll get back to you shortly.</p>
+
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                  <i className="fa-solid fa-check text-3xl text-green-500"></i>
+                </div>
+                <h4 className="text-2xl font-bold text-dark-gray mb-2">Message Sent!</h4>
+                <p className="text-gray-500">Thank you for reaching out.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required 
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-dark-gray focus:outline-none focus:border-accent-orange focus:bg-white transition-colors placeholder-gray-400"
+                    placeholder="Your Name"
+                  />
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email <span className="font-normal normal-case opacity-60">(Optional)</span></label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      name="email" 
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-dark-gray focus:outline-none focus:border-accent-orange focus:bg-white transition-colors placeholder-gray-400"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
+                    <input 
+                      type="tel" 
+                      id="phone" 
+                      name="phone" 
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-dark-gray focus:outline-none focus:border-accent-orange focus:bg-white transition-colors placeholder-gray-400"
+                      placeholder="+353 86 000 0000"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Message</label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    required 
+                    rows={8}
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-dark-gray focus:outline-none focus:border-accent-orange focus:bg-white transition-colors placeholder-gray-400 resize-none"
+                    placeholder="How can I help you?"
+                  ></textarea>
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={status === 'sending'}
+                  className="w-full bg-accent-orange text-white font-bold uppercase tracking-wider py-4 rounded-lg hover:bg-dark-gray hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-4 shadow-lg hover:shadow-xl"
+                >
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
+                
+                {status === 'error' && (
+                  <p className="text-red-500 text-sm text-center mt-2">Something went wrong. Please try again.</p>
+                )}
+              </form>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 const About: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   
   // Desktop Specific Refs (Canvas Scrub)
   const desktopVideoRef = useRef<HTMLVideoElement>(null);
@@ -153,7 +317,7 @@ const About: React.FC = () => {
 
   return (
     // LAYER ROOT: bg-gray-100 (Darker than off-white for contrast)
-    <section ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-gray-100 z-20">
+    <section id="about" ref={containerRef} className="relative pt-32 pb-12 lg:pb-0 bg-gray-100 z-20">
       
       {/* LAYER 1 (Bottom): Background Texture - z-0 */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-grid-pattern opacity-50 z-0 pointer-events-none"></div>
@@ -178,9 +342,12 @@ const About: React.FC = () => {
                <p>{CV_DATA.bio.split('execution.')[1]}</p>
             </div>
             
-            <a href="#contact" className="inline-block mt-10 px-8 py-4 bg-accent-orange text-white font-bold uppercase tracking-wider hover:bg-dark-gray transition-colors duration-300">
+            <button 
+              onClick={() => setIsContactOpen(true)}
+              className="inline-block mt-10 px-8 py-4 bg-accent-orange text-white font-bold uppercase tracking-wider hover:bg-dark-gray transition-colors duration-300"
+            >
               Get in Touch
-            </a>
+            </button>
           </div>
 
           {/* Video Column - Dual Mode */}
@@ -238,6 +405,9 @@ const About: React.FC = () => {
           
         </div>
       </div>
+      
+      {/* Contact Modal */}
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </section>
   );
 };
