@@ -90,7 +90,20 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
       { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637313/Cool_Dog_wnwzkh.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769637313/Cool_Dog_wnwzkh.jpg' }
     ] 
   },
-  { id: 'infographic', title: 'INFOGRAPHIC DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'infographic', 
+    title: 'INFOGRAPHIC DESIGN', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638171/FivePrime_fi6r30.jpg', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638171/FivePrime_fi6r30.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638171/FivePrime_fi6r30.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638175/The_Masters_utaxce.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638175/The_Masters_utaxce.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638173/rosacea-infographic_hvzj7x.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638173/rosacea-infographic_hvzj7x.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638172/Spieth_kuqjij.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638172/Spieth_kuqjij.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638169/Education_uzf92n.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769638169/Education_uzf92n.jpg' }
+    ]
+  },
   { 
     id: 'logo', 
     title: 'LOGO DESIGN', 
@@ -331,18 +344,9 @@ const CategoryCard: React.FC<{ item: PortfolioItem, onClick: () => void }> = ({ 
       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
 
       {/* 4. Text Content (Pill) - UPDATED POSITION & STYLE */}
-      <div className="absolute bottom-6 left-6 z-20 flex flex-col items-start">
-        <h3 className="bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
-          {item.title}
-        </h3>
-        
-        {/* TBC Badge */}
-        {isTbc && (
-          <span className="mt-2 text-[9px] font-bold uppercase tracking-widest bg-black/50 text-white px-2 py-1 rounded backdrop-blur-sm">
-            Coming Soon
-          </span>
-        )}
-      </div>
+      <h3 className="absolute bottom-6 left-6 z-20 bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-wider shadow-lg whitespace-nowrap">
+        {item.title}
+      </h3>
     </div>
   );
 };
