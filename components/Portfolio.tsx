@@ -78,7 +78,7 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
   { id: 'infographic', title: 'INFOGRAPHIC DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { id: 'logo', title: 'LOGO DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { id: 'magazine', title: 'MAGAZINE DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
-  { id: 'packaging', title: 'PACKAGING DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { id: 'packaging', title: 'PACKAGING', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { 
     id: 'photo', 
     title: 'PHOTOGRAPHY', 
