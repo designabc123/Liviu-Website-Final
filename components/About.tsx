@@ -121,11 +121,12 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email <span className="font-normal normal-case opacity-60">(Optional)</span></label>
+                    <label htmlFor="email" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Email</label>
                     <input 
                       type="email" 
                       id="email" 
                       name="email" 
+                      required
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-dark-gray focus:outline-none focus:border-accent-orange focus:bg-white transition-colors placeholder-gray-400"
@@ -133,7 +134,7 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone</label>
+                    <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Phone <span className="font-normal normal-case opacity-60">(Optional)</span></label>
                     <input 
                       type="tel" 
                       id="phone" 
