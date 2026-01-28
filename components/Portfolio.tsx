@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -78,7 +79,25 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
   { id: 'logo', title: 'LOGO DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { id: 'magazine', title: 'MAGAZINE DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { id: 'packaging', title: 'PACKAGING DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
-  { id: 'photo', title: 'PROFESSIONAL PHOTOGRAPHY', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'photo', 
+    title: 'PHOTOGRAPHY', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634703/Claudia_Bridge_ywygkv.jpg', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634703/Claudia_Bridge_ywygkv.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634703/Claudia_Bridge_ywygkv.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634702/Library_Bridge_-_Kayla_03_vbma9f.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634702/Library_Bridge_-_Kayla_03_vbma9f.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634701/Restaurant_-_Daniel_02_jrsx5w.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634701/Restaurant_-_Daniel_02_jrsx5w.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634705/Catalina_Portrait_k3wve8.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634705/Catalina_Portrait_k3wve8.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Doctor-and-patient_ymdu8i.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Doctor-and-patient_ymdu8i.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Library_Reading_-_Jan_04_y6aklu.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Library_Reading_-_Jan_04_y6aklu.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Cafe_-_Thomas_04_bajhtm.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634700/Cafe_-_Thomas_04_bajhtm.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Archive_-_Ania_05_q9zus9.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Archive_-_Ania_05_q9zus9.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634697/Rosacea-Model_lddsbr.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634697/Rosacea-Model_lddsbr.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Reading_-_Nadia_06_tcpuyk.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Reading_-_Nadia_06_tcpuyk.jpg' }
+    ]
+  },
   { id: 'web', title: 'WEB DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] }
 ];
 
@@ -114,12 +133,15 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ category, onClose }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [category.items.length, onClose]);
 
-  return (
+  // Safety check for SSR/environment
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
       onClick={onClose}
     >
       <div 
@@ -214,7 +236,8 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ category, onClose }) => {
           </div>
         )}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
 
