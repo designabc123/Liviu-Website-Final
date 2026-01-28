@@ -344,7 +344,7 @@ const CategoryCard: React.FC<{ item: PortfolioItem, onClick: () => void }> = ({ 
       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
 
       {/* 4. Text Content (Pill) - UPDATED POSITION & STYLE */}
-      <h3 className="absolute bottom-6 left-6 z-20 bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-wider shadow-lg whitespace-nowrap">
+      <h3 className="absolute bottom-3 left-3 z-20 bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-4 py-1 text-[10px] font-medium uppercase tracking-wider shadow-lg whitespace-nowrap">
         {item.title}
       </h3>
     </div>
