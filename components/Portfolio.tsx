@@ -124,7 +124,23 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
       { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/Cambridge_Editors_jyekts.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769636051/Cambridge_Editors_jyekts.jpg' }
     ]
   },
-  { id: 'magazine', title: 'MAGAZINE DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
+  { 
+    id: 'magazine', 
+    title: 'MAGAZINE DESIGN', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639196/Mag_01_pfggjt.jpg', 
+    type: 'image', 
+    items: [
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639196/Mag_01_pfggjt.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639196/Mag_01_pfggjt.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639197/Mag_02_rddkq5.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639197/Mag_02_rddkq5.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639200/Mag_03_kkncsj.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639200/Mag_03_kkncsj.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639200/Mag_04_u9tult.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639200/Mag_04_u9tult.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639202/Mag_05_cx0cqt.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639202/Mag_05_cx0cqt.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639204/Mag_06_lbdiyo.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639204/Mag_06_lbdiyo.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639206/Mag_07_ar4cpn.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639206/Mag_07_ar4cpn.jpg' },
+      { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639209/Mag_08_jtcjlj.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769639209/Mag_08_jtcjlj.jpg' }
+    ] 
+  },
   { id: 'packaging', title: 'PACKAGING', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] },
   { 
     id: 'photo', 
@@ -344,7 +360,7 @@ const CategoryCard: React.FC<{ item: PortfolioItem, onClick: () => void }> = ({ 
       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
 
       {/* 4. Text Content (Pill) - UPDATED POSITION & STYLE */}
-      <h3 className="absolute bottom-3 left-3 z-20 bg-black text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-4 py-1 text-[10px] font-medium uppercase tracking-wider shadow-lg whitespace-nowrap">
+      <h3 className="absolute bottom-3 left-3 z-20 bg-black/70 text-white group-hover:bg-accent-orange transition-colors duration-300 rounded-full px-4 py-1 text-[10px] font-medium uppercase tracking-wider shadow-lg whitespace-nowrap">
         {item.title}
       </h3>
     </div>
