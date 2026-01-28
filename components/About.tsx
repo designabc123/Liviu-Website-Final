@@ -37,15 +37,20 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     e.preventDefault();
     setStatus('sending');
 
+    // MAPPING FIX: Ensure keys match the EmailJS template variables exactly
+    const templateParams = {
+      user_name: formData.name,
+      user_email: formData.email,
+      user_phone: formData.phone,
+      message: formData.message
+    };
+
+    console.log("Sending Data:", templateParams);
+
     emailjs.send(
       EMAILJS_SERVICE_ID,
       EMAILJS_TEMPLATE_ID,
-      {
-        from_name: formData.name,
-        reply_to: formData.email,
-        phone_number: formData.phone,
-        message: formData.message,
-      },
+      templateParams,
       EMAILJS_PUBLIC_KEY
     )
     .then(() => {
