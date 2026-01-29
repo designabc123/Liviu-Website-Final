@@ -176,7 +176,19 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
       { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Reading_-_Nadia_06_tcpuyk.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769634699/Library_Reading_-_Nadia_06_tcpuyk.jpg' }
     ]
   },
-  { id: 'web', title: 'WEB DESIGN', className: 'col-span-1 row-span-1', coverImage: '', type: 'tbc', items: [] }
+  { 
+    id: 'web', 
+    title: 'WEB DESIGN', 
+    className: 'col-span-1 row-span-1', 
+    coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png', 
+    type: 'image', 
+    items: [
+        { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png' },
+        { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Inside-Objects_eh41hn.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Inside-Objects_eh41hn.jpg' },
+        { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Claudia_poqsfc.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Claudia_poqsfc.jpg' },
+        { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722742/LL_ljhvzk.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722742/LL_ljhvzk.jpg' }
+    ] 
+  }
 ];
 
 // --- COMPONENT: MODAL ---
