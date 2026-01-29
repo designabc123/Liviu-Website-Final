@@ -183,7 +183,6 @@ const PORTFOLIO_DATA: PortfolioItem[] = [
     coverImage: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png', 
     type: 'image', 
     items: [
-        { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722741/IO_1_lkbbfc.png' },
         { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Inside-Objects_eh41hn.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Inside-Objects_eh41hn.jpg' },
         { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Claudia_poqsfc.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722740/Claudia_poqsfc.jpg' },
         { type: 'image', src: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722742/LL_ljhvzk.jpg', thumb: 'https://res.cloudinary.com/dao9flvhw/image/upload/v1769722742/LL_ljhvzk.jpg' }
